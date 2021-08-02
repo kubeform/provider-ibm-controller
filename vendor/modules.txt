@@ -1452,7 +1452,7 @@ kmodules.xyz/resource-metadata/pkg/graph
 # kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5
 ## explicit
 kubeform.dev/apimachinery/api/v1alpha1
-# kubeform.dev/provider-ibm-api v0.0.0-20210802153337-a04dc2701c8f
+# kubeform.dev/provider-ibm-api v0.3.0
 ## explicit
 kubeform.dev/provider-ibm-api/api/provider
 kubeform.dev/provider-ibm-api/apis/apigateway
