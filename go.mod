@@ -3,7 +3,7 @@ module kubeform.dev/provider-ibm-controller
 go 1.16
 
 require (
-	github.com/IBM-Cloud/terraform-provider-ibm v1.29.0
+	github.com/IBM-Cloud/terraform-provider-ibm v1.28.1-0.20210729083022-bc68146ed6f3
 	github.com/PromonLogicalis/asn1 v0.0.0-20190312173541-d60463189a56 // indirect
 	github.com/fatih/structs v1.1.0
 	github.com/go-logr/logr v0.4.0
