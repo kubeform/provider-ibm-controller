@@ -27,7 +27,7 @@ import (
 	"sync"
 	"time"
 
-	ibm "github.com/equinix/terraform-provider-metal/metal"
+	ibm "github.com/IBM-Cloud/terraform-provider-ibm/ibm"
 	"github.com/gobuffalo/flect"
 	auditlib "go.bytebuilders.dev/audit/lib"
 	arv1 "k8s.io/api/admissionregistration/v1"
@@ -39,39 +39,97 @@ import (
 	admissionregistrationv1 "k8s.io/client-go/kubernetes/typed/admissionregistration/v1"
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/klog/v2"
-	bgpv1alpha1 "kubeform.dev/provider-ibm-api/apis/bgp/v1alpha1"
-	connectionv1alpha1 "kubeform.dev/provider-ibm-api/apis/connection/v1alpha1"
-	devicev1alpha1 "kubeform.dev/provider-ibm-api/apis/device/v1alpha1"
-	gatewayv1alpha1 "kubeform.dev/provider-ibm-api/apis/gateway/v1alpha1"
-	ipv1alpha1 "kubeform.dev/provider-ibm-api/apis/ip/v1alpha1"
-	organizationv1alpha1 "kubeform.dev/provider-ibm-api/apis/organization/v1alpha1"
-	portv1alpha1 "kubeform.dev/provider-ibm-api/apis/port/v1alpha1"
-	projectv1alpha1 "kubeform.dev/provider-ibm-api/apis/project/v1alpha1"
-	reservedv1alpha1 "kubeform.dev/provider-ibm-api/apis/reserved/v1alpha1"
-	spotv1alpha1 "kubeform.dev/provider-ibm-api/apis/spot/v1alpha1"
-	sshv1alpha1 "kubeform.dev/provider-ibm-api/apis/ssh/v1alpha1"
-	userv1alpha1 "kubeform.dev/provider-ibm-api/apis/user/v1alpha1"
-	virtualv1alpha1 "kubeform.dev/provider-ibm-api/apis/virtual/v1alpha1"
-	vlanv1alpha1 "kubeform.dev/provider-ibm-api/apis/vlan/v1alpha1"
-	volumev1alpha1 "kubeform.dev/provider-ibm-api/apis/volume/v1alpha1"
-	controllersbgp "kubeform.dev/provider-ibm-controller/controllers/bgp"
-	controllersconnection "kubeform.dev/provider-ibm-controller/controllers/connection"
-	controllersdevice "kubeform.dev/provider-ibm-controller/controllers/device"
-	controllersgateway "kubeform.dev/provider-ibm-controller/controllers/gateway"
-	controllersip "kubeform.dev/provider-ibm-controller/controllers/ip"
-	controllersorganization "kubeform.dev/provider-ibm-controller/controllers/organization"
-	controllersport "kubeform.dev/provider-ibm-controller/controllers/port"
-	controllersproject "kubeform.dev/provider-ibm-controller/controllers/project"
-	controllersreserved "kubeform.dev/provider-ibm-controller/controllers/reserved"
-	controllersspot "kubeform.dev/provider-ibm-controller/controllers/spot"
-	controllersssh "kubeform.dev/provider-ibm-controller/controllers/ssh"
-	controllersuser "kubeform.dev/provider-ibm-controller/controllers/user"
-	controllersvirtual "kubeform.dev/provider-ibm-controller/controllers/virtual"
-	controllersvlan "kubeform.dev/provider-ibm-controller/controllers/vlan"
-	controllersvolume "kubeform.dev/provider-ibm-controller/controllers/volume"
+	apigatewayv1alpha1 "kubeform.dev/provider-ibm-api/apis/apigateway/v1alpha1"
+	appv1alpha1 "kubeform.dev/provider-ibm-api/apis/app/v1alpha1"
+	cdnv1alpha1 "kubeform.dev/provider-ibm-api/apis/cdn/v1alpha1"
+	certificatev1alpha1 "kubeform.dev/provider-ibm-api/apis/certificate/v1alpha1"
+	cisv1alpha1 "kubeform.dev/provider-ibm-api/apis/cis/v1alpha1"
+	cmv1alpha1 "kubeform.dev/provider-ibm-api/apis/cm/v1alpha1"
+	computev1alpha1 "kubeform.dev/provider-ibm-api/apis/compute/v1alpha1"
+	containerv1alpha1 "kubeform.dev/provider-ibm-api/apis/container/v1alpha1"
+	cosv1alpha1 "kubeform.dev/provider-ibm-api/apis/cos/v1alpha1"
+	crv1alpha1 "kubeform.dev/provider-ibm-api/apis/cr/v1alpha1"
+	databasev1alpha1 "kubeform.dev/provider-ibm-api/apis/database/v1alpha1"
+	dlv1alpha1 "kubeform.dev/provider-ibm-api/apis/dl/v1alpha1"
+	dnsv1alpha1 "kubeform.dev/provider-ibm-api/apis/dns/v1alpha1"
+	enterprisev1alpha1 "kubeform.dev/provider-ibm-api/apis/enterprise/v1alpha1"
+	eventv1alpha1 "kubeform.dev/provider-ibm-api/apis/event/v1alpha1"
+	firewallv1alpha1 "kubeform.dev/provider-ibm-api/apis/firewall/v1alpha1"
+	functionv1alpha1 "kubeform.dev/provider-ibm-api/apis/function/v1alpha1"
+	hardwarev1alpha1 "kubeform.dev/provider-ibm-api/apis/hardware/v1alpha1"
+	hpcsv1alpha1 "kubeform.dev/provider-ibm-api/apis/hpcs/v1alpha1"
+	iamv1alpha1 "kubeform.dev/provider-ibm-api/apis/iam/v1alpha1"
+	ipsecv1alpha1 "kubeform.dev/provider-ibm-api/apis/ipsec/v1alpha1"
+	isv1alpha1 "kubeform.dev/provider-ibm-api/apis/is/v1alpha1"
+	kmsv1alpha1 "kubeform.dev/provider-ibm-api/apis/kms/v1alpha1"
+	kpv1alpha1 "kubeform.dev/provider-ibm-api/apis/kp/v1alpha1"
+	lbv1alpha1 "kubeform.dev/provider-ibm-api/apis/lb/v1alpha1"
+	lbaasv1alpha1 "kubeform.dev/provider-ibm-api/apis/lbaas/v1alpha1"
+	multiv1alpha1 "kubeform.dev/provider-ibm-api/apis/multi/v1alpha1"
+	networkv1alpha1 "kubeform.dev/provider-ibm-api/apis/network/v1alpha1"
+	obv1alpha1 "kubeform.dev/provider-ibm-api/apis/ob/v1alpha1"
+	objectv1alpha1 "kubeform.dev/provider-ibm-api/apis/object/v1alpha1"
+	orgv1alpha1 "kubeform.dev/provider-ibm-api/apis/org/v1alpha1"
+	piv1alpha1 "kubeform.dev/provider-ibm-api/apis/pi/v1alpha1"
+	pnv1alpha1 "kubeform.dev/provider-ibm-api/apis/pn/v1alpha1"
+	resourcev1alpha1 "kubeform.dev/provider-ibm-api/apis/resource/v1alpha1"
+	satellitev1alpha1 "kubeform.dev/provider-ibm-api/apis/satellite/v1alpha1"
+	schematicsv1alpha1 "kubeform.dev/provider-ibm-api/apis/schematics/v1alpha1"
+	securityv1alpha1 "kubeform.dev/provider-ibm-api/apis/security/v1alpha1"
+	servicev1alpha1 "kubeform.dev/provider-ibm-api/apis/service/v1alpha1"
+	spacev1alpha1 "kubeform.dev/provider-ibm-api/apis/space/v1alpha1"
+	sslv1alpha1 "kubeform.dev/provider-ibm-api/apis/ssl/v1alpha1"
+	storagev1alpha1 "kubeform.dev/provider-ibm-api/apis/storage/v1alpha1"
+	subnetv1alpha1 "kubeform.dev/provider-ibm-api/apis/subnet/v1alpha1"
+	tgv1alpha1 "kubeform.dev/provider-ibm-api/apis/tg/v1alpha1"
+	controllersapigateway "kubeform.dev/provider-ibm-controller/controllers/apigateway"
+	controllersapp "kubeform.dev/provider-ibm-controller/controllers/app"
+	controllerscdn "kubeform.dev/provider-ibm-controller/controllers/cdn"
+	controllerscertificate "kubeform.dev/provider-ibm-controller/controllers/certificate"
+	controllerscis "kubeform.dev/provider-ibm-controller/controllers/cis"
+	controllerscm "kubeform.dev/provider-ibm-controller/controllers/cm"
+	controllerscompute "kubeform.dev/provider-ibm-controller/controllers/compute"
+	controllerscontainer "kubeform.dev/provider-ibm-controller/controllers/container"
+	controllerscos "kubeform.dev/provider-ibm-controller/controllers/cos"
+	controllerscr "kubeform.dev/provider-ibm-controller/controllers/cr"
+	controllersdatabase "kubeform.dev/provider-ibm-controller/controllers/database"
+	controllersdl "kubeform.dev/provider-ibm-controller/controllers/dl"
+	controllersdns "kubeform.dev/provider-ibm-controller/controllers/dns"
+	controllersenterprise "kubeform.dev/provider-ibm-controller/controllers/enterprise"
+	controllersevent "kubeform.dev/provider-ibm-controller/controllers/event"
+	controllersfirewall "kubeform.dev/provider-ibm-controller/controllers/firewall"
+	controllersfunction "kubeform.dev/provider-ibm-controller/controllers/function"
+	controllershardware "kubeform.dev/provider-ibm-controller/controllers/hardware"
+	controllershpcs "kubeform.dev/provider-ibm-controller/controllers/hpcs"
+	controllersiam "kubeform.dev/provider-ibm-controller/controllers/iam"
+	controllersipsec "kubeform.dev/provider-ibm-controller/controllers/ipsec"
+	controllersis "kubeform.dev/provider-ibm-controller/controllers/is"
+	controllerskms "kubeform.dev/provider-ibm-controller/controllers/kms"
+	controllerskp "kubeform.dev/provider-ibm-controller/controllers/kp"
+	controllerslb "kubeform.dev/provider-ibm-controller/controllers/lb"
+	controllerslbaas "kubeform.dev/provider-ibm-controller/controllers/lbaas"
+	controllersmulti "kubeform.dev/provider-ibm-controller/controllers/multi"
+	controllersnetwork "kubeform.dev/provider-ibm-controller/controllers/network"
+	controllersob "kubeform.dev/provider-ibm-controller/controllers/ob"
+	controllersobject "kubeform.dev/provider-ibm-controller/controllers/object"
+	controllersorg "kubeform.dev/provider-ibm-controller/controllers/org"
+	controllerspi "kubeform.dev/provider-ibm-controller/controllers/pi"
+	controllerspn "kubeform.dev/provider-ibm-controller/controllers/pn"
+	controllersresource "kubeform.dev/provider-ibm-controller/controllers/resource"
+	controllerssatellite "kubeform.dev/provider-ibm-controller/controllers/satellite"
+	controllersschematics "kubeform.dev/provider-ibm-controller/controllers/schematics"
+	controllerssecurity "kubeform.dev/provider-ibm-controller/controllers/security"
+	controllersservice "kubeform.dev/provider-ibm-controller/controllers/service"
+	controllersspace "kubeform.dev/provider-ibm-controller/controllers/space"
+	controllersssl "kubeform.dev/provider-ibm-controller/controllers/ssl"
+	controllersstorage "kubeform.dev/provider-ibm-controller/controllers/storage"
+	controllerssubnet "kubeform.dev/provider-ibm-controller/controllers/subnet"
+	controllerstg "kubeform.dev/provider-ibm-controller/controllers/tg"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 )
+
+var _provider = ibm.Provider()
 
 var runningControllers = struct {
 	sync.RWMutex
@@ -253,345 +311,3873 @@ func updateVWC(vwcClient *admissionregistrationv1.AdmissionregistrationV1Client,
 func SetupManager(ctx context.Context, mgr manager.Manager, gvk schema.GroupVersionKind, auditor *auditlib.EventPublisher, watchOnlyDefault bool) error {
 	switch gvk {
 	case schema.GroupVersionKind{
-		Group:   "bgp.ibm.kubeform.com",
+		Group:   "apigateway.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Session",
+		Kind:    "Endpoint",
 	}:
-		if err := (&controllersbgp.SessionReconciler{
+		if err := (&controllersapigateway.EndpointReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Session"),
+			Log:              ctrl.Log.WithName("controllers").WithName("Endpoint"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_bgp_session"],
-			TypeName:         "metal_bgp_session",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_api_gateway_endpoint"],
+			TypeName:         "ibm_api_gateway_endpoint",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Session")
+			setupLog.Error(err, "unable to create controller", "controller", "Endpoint")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "connection.ibm.kubeform.com",
+		Group:   "apigateway.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Connection",
+		Kind:    "EndpointSubscription",
 	}:
-		if err := (&controllersconnection.ConnectionReconciler{
+		if err := (&controllersapigateway.EndpointSubscriptionReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Connection"),
+			Log:              ctrl.Log.WithName("controllers").WithName("EndpointSubscription"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_connection"],
-			TypeName:         "metal_connection",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_api_gateway_endpoint_subscription"],
+			TypeName:         "ibm_api_gateway_endpoint_subscription",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Connection")
+			setupLog.Error(err, "unable to create controller", "controller", "EndpointSubscription")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "device.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Device",
+		Kind:    "App",
 	}:
-		if err := (&controllersdevice.DeviceReconciler{
+		if err := (&controllersapp.AppReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Device"),
+			Log:              ctrl.Log.WithName("controllers").WithName("App"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_device"],
-			TypeName:         "metal_device",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_app"],
+			TypeName:         "ibm_app",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Device")
+			setupLog.Error(err, "unable to create controller", "controller", "App")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "device.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "NetworkType",
+		Kind:    "ConfigEnvironment",
 	}:
-		if err := (&controllersdevice.NetworkTypeReconciler{
+		if err := (&controllersapp.ConfigEnvironmentReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("NetworkType"),
+			Log:              ctrl.Log.WithName("controllers").WithName("ConfigEnvironment"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_device_network_type"],
-			TypeName:         "metal_device_network_type",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_app_config_environment"],
+			TypeName:         "ibm_app_config_environment",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "NetworkType")
+			setupLog.Error(err, "unable to create controller", "controller", "ConfigEnvironment")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "gateway.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Gateway",
+		Kind:    "ConfigFeature",
 	}:
-		if err := (&controllersgateway.GatewayReconciler{
+		if err := (&controllersapp.ConfigFeatureReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Gateway"),
+			Log:              ctrl.Log.WithName("controllers").WithName("ConfigFeature"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_gateway"],
-			TypeName:         "metal_gateway",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_app_config_feature"],
+			TypeName:         "ibm_app_config_feature",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Gateway")
+			setupLog.Error(err, "unable to create controller", "controller", "ConfigFeature")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "ip.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Attachment",
+		Kind:    "DomainPrivate",
 	}:
-		if err := (&controllersip.AttachmentReconciler{
+		if err := (&controllersapp.DomainPrivateReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Attachment"),
+			Log:              ctrl.Log.WithName("controllers").WithName("DomainPrivate"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_ip_attachment"],
-			TypeName:         "metal_ip_attachment",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_app_domain_private"],
+			TypeName:         "ibm_app_domain_private",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Attachment")
+			setupLog.Error(err, "unable to create controller", "controller", "DomainPrivate")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "organization.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Organization",
+		Kind:    "DomainShared",
 	}:
-		if err := (&controllersorganization.OrganizationReconciler{
+		if err := (&controllersapp.DomainSharedReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Organization"),
+			Log:              ctrl.Log.WithName("controllers").WithName("DomainShared"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_organization"],
-			TypeName:         "metal_organization",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_app_domain_shared"],
+			TypeName:         "ibm_app_domain_shared",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Organization")
+			setupLog.Error(err, "unable to create controller", "controller", "DomainShared")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "port.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "VlanAttachment",
+		Kind:    "Route",
 	}:
-		if err := (&controllersport.VlanAttachmentReconciler{
+		if err := (&controllersapp.RouteReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("VlanAttachment"),
+			Log:              ctrl.Log.WithName("controllers").WithName("Route"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_port_vlan_attachment"],
-			TypeName:         "metal_port_vlan_attachment",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_app_route"],
+			TypeName:         "ibm_app_route",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "VlanAttachment")
+			setupLog.Error(err, "unable to create controller", "controller", "Route")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "project.ibm.kubeform.com",
+		Group:   "cdn.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Project",
+		Kind:    "Cdn",
 	}:
-		if err := (&controllersproject.ProjectReconciler{
+		if err := (&controllerscdn.CdnReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Project"),
+			Log:              ctrl.Log.WithName("controllers").WithName("Cdn"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_project"],
-			TypeName:         "metal_project",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cdn"],
+			TypeName:         "ibm_cdn",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Project")
+			setupLog.Error(err, "unable to create controller", "controller", "Cdn")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "project.ibm.kubeform.com",
+		Group:   "certificate.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "ApiKey",
+		Kind:    "ManagerImport",
 	}:
-		if err := (&controllersproject.ApiKeyReconciler{
+		if err := (&controllerscertificate.ManagerImportReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("ApiKey"),
+			Log:              ctrl.Log.WithName("controllers").WithName("ManagerImport"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_project_api_key"],
-			TypeName:         "metal_project_api_key",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_certificate_manager_import"],
+			TypeName:         "ibm_certificate_manager_import",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "ApiKey")
+			setupLog.Error(err, "unable to create controller", "controller", "ManagerImport")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "project.ibm.kubeform.com",
+		Group:   "certificate.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ManagerOrder",
+	}:
+		if err := (&controllerscertificate.ManagerOrderReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ManagerOrder"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_certificate_manager_order"],
+			TypeName:         "ibm_certificate_manager_order",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ManagerOrder")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Cis",
+	}:
+		if err := (&controllerscis.CisReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Cis"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis"],
+			TypeName:         "ibm_cis",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Cis")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CacheSettings",
+	}:
+		if err := (&controllerscis.CacheSettingsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("CacheSettings"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_cache_settings"],
+			TypeName:         "ibm_cis_cache_settings",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "CacheSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CertificateOrder",
+	}:
+		if err := (&controllerscis.CertificateOrderReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("CertificateOrder"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_certificate_order"],
+			TypeName:         "ibm_cis_certificate_order",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "CertificateOrder")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CertificateUpload",
+	}:
+		if err := (&controllerscis.CertificateUploadReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("CertificateUpload"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_certificate_upload"],
+			TypeName:         "ibm_cis_certificate_upload",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "CertificateUpload")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CustomPage",
+	}:
+		if err := (&controllerscis.CustomPageReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("CustomPage"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_custom_page"],
+			TypeName:         "ibm_cis_custom_page",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "CustomPage")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DnsRecord",
+	}:
+		if err := (&controllerscis.DnsRecordReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DnsRecord"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_dns_record"],
+			TypeName:         "ibm_cis_dns_record",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DnsRecord")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DnsRecordsImport",
+	}:
+		if err := (&controllerscis.DnsRecordsImportReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DnsRecordsImport"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_dns_records_import"],
+			TypeName:         "ibm_cis_dns_records_import",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DnsRecordsImport")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Domain",
+	}:
+		if err := (&controllerscis.DomainReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Domain"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_domain"],
+			TypeName:         "ibm_cis_domain",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Domain")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DomainSettings",
+	}:
+		if err := (&controllerscis.DomainSettingsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DomainSettings"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_domain_settings"],
+			TypeName:         "ibm_cis_domain_settings",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DomainSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "EdgeFunctionsAction",
+	}:
+		if err := (&controllerscis.EdgeFunctionsActionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("EdgeFunctionsAction"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_edge_functions_action"],
+			TypeName:         "ibm_cis_edge_functions_action",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "EdgeFunctionsAction")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "EdgeFunctionsTrigger",
+	}:
+		if err := (&controllerscis.EdgeFunctionsTriggerReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("EdgeFunctionsTrigger"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_edge_functions_trigger"],
+			TypeName:         "ibm_cis_edge_functions_trigger",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "EdgeFunctionsTrigger")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Filter",
+	}:
+		if err := (&controllerscis.FilterReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Filter"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_filter"],
+			TypeName:         "ibm_cis_filter",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Filter")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Firewall",
+	}:
+		if err := (&controllerscis.FirewallReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Firewall"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_firewall"],
+			TypeName:         "ibm_cis_firewall",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Firewall")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GlobalLoadBalancer",
+	}:
+		if err := (&controllerscis.GlobalLoadBalancerReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("GlobalLoadBalancer"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_global_load_balancer"],
+			TypeName:         "ibm_cis_global_load_balancer",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "GlobalLoadBalancer")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Healthcheck",
+	}:
+		if err := (&controllerscis.HealthcheckReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Healthcheck"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_healthcheck"],
+			TypeName:         "ibm_cis_healthcheck",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Healthcheck")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "OriginPool",
+	}:
+		if err := (&controllerscis.OriginPoolReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("OriginPool"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_origin_pool"],
+			TypeName:         "ibm_cis_origin_pool",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "OriginPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PageRule",
+	}:
+		if err := (&controllerscis.PageRuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("PageRule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_page_rule"],
+			TypeName:         "ibm_cis_page_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "PageRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "RangeApp",
+	}:
+		if err := (&controllerscis.RangeAppReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("RangeApp"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_range_app"],
+			TypeName:         "ibm_cis_range_app",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "RangeApp")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "RateLimit",
+	}:
+		if err := (&controllerscis.RateLimitReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("RateLimit"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_rate_limit"],
+			TypeName:         "ibm_cis_rate_limit",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "RateLimit")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Routing",
+	}:
+		if err := (&controllerscis.RoutingReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Routing"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_routing"],
+			TypeName:         "ibm_cis_routing",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Routing")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "TlsSettings",
+	}:
+		if err := (&controllerscis.TlsSettingsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("TlsSettings"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_tls_settings"],
+			TypeName:         "ibm_cis_tls_settings",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "TlsSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WafGroup",
+	}:
+		if err := (&controllerscis.WafGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("WafGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_waf_group"],
+			TypeName:         "ibm_cis_waf_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "WafGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WafPackage",
+	}:
+		if err := (&controllerscis.WafPackageReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("WafPackage"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_waf_package"],
+			TypeName:         "ibm_cis_waf_package",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "WafPackage")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WafRule",
+	}:
+		if err := (&controllerscis.WafRuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("WafRule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cis_waf_rule"],
+			TypeName:         "ibm_cis_waf_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "WafRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Catalog",
+	}:
+		if err := (&controllerscm.CatalogReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Catalog"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cm_catalog"],
+			TypeName:         "ibm_cm_catalog",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Catalog")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Offering",
+	}:
+		if err := (&controllerscm.OfferingReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Offering"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cm_offering"],
+			TypeName:         "ibm_cm_offering",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Offering")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "OfferingInstance",
+	}:
+		if err := (&controllerscm.OfferingInstanceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("OfferingInstance"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cm_offering_instance"],
+			TypeName:         "ibm_cm_offering_instance",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "OfferingInstance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Version",
+	}:
+		if err := (&controllerscm.VersionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Version"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cm_version"],
+			TypeName:         "ibm_cm_version",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Version")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AutoscaleGroup",
+	}:
+		if err := (&controllerscompute.AutoscaleGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AutoscaleGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_autoscale_group"],
+			TypeName:         "ibm_compute_autoscale_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AutoscaleGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AutoscalePolicy",
+	}:
+		if err := (&controllerscompute.AutoscalePolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AutoscalePolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_autoscale_policy"],
+			TypeName:         "ibm_compute_autoscale_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AutoscalePolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "BareMetal",
+	}:
+		if err := (&controllerscompute.BareMetalReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("BareMetal"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_bare_metal"],
+			TypeName:         "ibm_compute_bare_metal",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "BareMetal")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHost",
+	}:
+		if err := (&controllerscompute.DedicatedHostReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DedicatedHost"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_dedicated_host"],
+			TypeName:         "ibm_compute_dedicated_host",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DedicatedHost")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Monitor",
+	}:
+		if err := (&controllerscompute.MonitorReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Monitor"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_monitor"],
+			TypeName:         "ibm_compute_monitor",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Monitor")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PlacementGroup",
+	}:
+		if err := (&controllerscompute.PlacementGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("PlacementGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_placement_group"],
+			TypeName:         "ibm_compute_placement_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "PlacementGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ProvisioningHook",
+	}:
+		if err := (&controllerscompute.ProvisioningHookReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ProvisioningHook"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_provisioning_hook"],
+			TypeName:         "ibm_compute_provisioning_hook",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ProvisioningHook")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
 		Kind:    "SshKey",
 	}:
-		if err := (&controllersproject.SshKeyReconciler{
+		if err := (&controllerscompute.SshKeyReconciler{
 			Client:           mgr.GetClient(),
 			Log:              ctrl.Log.WithName("controllers").WithName("SshKey"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_project_ssh_key"],
-			TypeName:         "metal_project_ssh_key",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_ssh_key"],
+			TypeName:         "ibm_compute_ssh_key",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
 			setupLog.Error(err, "unable to create controller", "controller", "SshKey")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "reserved.ibm.kubeform.com",
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "IpBlock",
+		Kind:    "SslCertificate",
 	}:
-		if err := (&controllersreserved.IpBlockReconciler{
+		if err := (&controllerscompute.SslCertificateReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("IpBlock"),
+			Log:              ctrl.Log.WithName("controllers").WithName("SslCertificate"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_reserved_ip_block"],
-			TypeName:         "metal_reserved_ip_block",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_ssl_certificate"],
+			TypeName:         "ibm_compute_ssl_certificate",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "IpBlock")
+			setupLog.Error(err, "unable to create controller", "controller", "SslCertificate")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "spot.ibm.kubeform.com",
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "MarketRequest",
+		Kind:    "User",
 	}:
-		if err := (&controllersspot.MarketRequestReconciler{
+		if err := (&controllerscompute.UserReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("MarketRequest"),
+			Log:              ctrl.Log.WithName("controllers").WithName("User"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_spot_market_request"],
-			TypeName:         "metal_spot_market_request",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_user"],
+			TypeName:         "ibm_compute_user",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "MarketRequest")
+			setupLog.Error(err, "unable to create controller", "controller", "User")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "ssh.ibm.kubeform.com",
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Key",
+		Kind:    "VmInstance",
 	}:
-		if err := (&controllersssh.KeyReconciler{
+		if err := (&controllerscompute.VmInstanceReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Key"),
+			Log:              ctrl.Log.WithName("controllers").WithName("VmInstance"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_ssh_key"],
-			TypeName:         "metal_ssh_key",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_compute_vm_instance"],
+			TypeName:         "ibm_compute_vm_instance",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Key")
+			setupLog.Error(err, "unable to create controller", "controller", "VmInstance")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "user.ibm.kubeform.com",
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Addons",
+	}:
+		if err := (&controllerscontainer.AddonsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Addons"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_addons"],
+			TypeName:         "ibm_container_addons",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Addons")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Alb",
+	}:
+		if err := (&controllerscontainer.AlbReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Alb"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_alb"],
+			TypeName:         "ibm_container_alb",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Alb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AlbCert",
+	}:
+		if err := (&controllerscontainer.AlbCertReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AlbCert"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_alb_cert"],
+			TypeName:         "ibm_container_alb_cert",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AlbCert")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ApiKeyReset",
+	}:
+		if err := (&controllerscontainer.ApiKeyResetReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ApiKeyReset"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_api_key_reset"],
+			TypeName:         "ibm_container_api_key_reset",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ApiKeyReset")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "BindService",
+	}:
+		if err := (&controllerscontainer.BindServiceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("BindService"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_bind_service"],
+			TypeName:         "ibm_container_bind_service",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "BindService")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Cluster",
+	}:
+		if err := (&controllerscontainer.ClusterReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Cluster"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_cluster"],
+			TypeName:         "ibm_container_cluster",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Cluster")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ClusterFeature",
+	}:
+		if err := (&controllerscontainer.ClusterFeatureReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ClusterFeature"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_cluster_feature"],
+			TypeName:         "ibm_container_cluster_feature",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ClusterFeature")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcAlb",
+	}:
+		if err := (&controllerscontainer.VpcAlbReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpcAlb"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_vpc_alb"],
+			TypeName:         "ibm_container_vpc_alb",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpcAlb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcCluster",
+	}:
+		if err := (&controllerscontainer.VpcClusterReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpcCluster"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_vpc_cluster"],
+			TypeName:         "ibm_container_vpc_cluster",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpcCluster")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcWorkerPool",
+	}:
+		if err := (&controllerscontainer.VpcWorkerPoolReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpcWorkerPool"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_vpc_worker_pool"],
+			TypeName:         "ibm_container_vpc_worker_pool",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpcWorkerPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WorkerPool",
+	}:
+		if err := (&controllerscontainer.WorkerPoolReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("WorkerPool"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_worker_pool"],
+			TypeName:         "ibm_container_worker_pool",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "WorkerPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WorkerPoolZoneAttachment",
+	}:
+		if err := (&controllerscontainer.WorkerPoolZoneAttachmentReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("WorkerPoolZoneAttachment"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_container_worker_pool_zone_attachment"],
+			TypeName:         "ibm_container_worker_pool_zone_attachment",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "WorkerPoolZoneAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cos.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Bucket",
+	}:
+		if err := (&controllerscos.BucketReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Bucket"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cos_bucket"],
+			TypeName:         "ibm_cos_bucket",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Bucket")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cos.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "BucketObject",
+	}:
+		if err := (&controllerscos.BucketObjectReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("BucketObject"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cos_bucket_object"],
+			TypeName:         "ibm_cos_bucket_object",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "BucketObject")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cr.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Namespace",
+	}:
+		if err := (&controllerscr.NamespaceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Namespace"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cr_namespace"],
+			TypeName:         "ibm_cr_namespace",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Namespace")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cr.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "RetentionPolicy",
+	}:
+		if err := (&controllerscr.RetentionPolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("RetentionPolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_cr_retention_policy"],
+			TypeName:         "ibm_cr_retention_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "RetentionPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "database.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Database",
+	}:
+		if err := (&controllersdatabase.DatabaseReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Database"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_database"],
+			TypeName:         "ibm_database",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Database")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Gateway",
+	}:
+		if err := (&controllersdl.GatewayReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Gateway"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dl_gateway"],
+			TypeName:         "ibm_dl_gateway",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Gateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ProviderGateway",
+	}:
+		if err := (&controllersdl.ProviderGatewayReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ProviderGateway"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dl_provider_gateway"],
+			TypeName:         "ibm_dl_provider_gateway",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ProviderGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VirtualConnection",
+	}:
+		if err := (&controllersdl.VirtualConnectionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VirtualConnection"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dl_virtual_connection"],
+			TypeName:         "ibm_dl_virtual_connection",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VirtualConnection")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Domain",
+	}:
+		if err := (&controllersdns.DomainReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Domain"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_domain"],
+			TypeName:         "ibm_dns_domain",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Domain")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DomainRegistrationNameservers",
+	}:
+		if err := (&controllersdns.DomainRegistrationNameserversReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DomainRegistrationNameservers"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_domain_registration_nameservers"],
+			TypeName:         "ibm_dns_domain_registration_nameservers",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DomainRegistrationNameservers")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Glb",
+	}:
+		if err := (&controllersdns.GlbReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Glb"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_glb"],
+			TypeName:         "ibm_dns_glb",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Glb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GlbMonitor",
+	}:
+		if err := (&controllersdns.GlbMonitorReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("GlbMonitor"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_glb_monitor"],
+			TypeName:         "ibm_dns_glb_monitor",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "GlbMonitor")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GlbPool",
+	}:
+		if err := (&controllersdns.GlbPoolReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("GlbPool"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_glb_pool"],
+			TypeName:         "ibm_dns_glb_pool",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "GlbPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PermittedNetwork",
+	}:
+		if err := (&controllersdns.PermittedNetworkReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("PermittedNetwork"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_permitted_network"],
+			TypeName:         "ibm_dns_permitted_network",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "PermittedNetwork")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Record",
+	}:
+		if err := (&controllersdns.RecordReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Record"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_record"],
+			TypeName:         "ibm_dns_record",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Record")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ResourceRecord",
+	}:
+		if err := (&controllersdns.ResourceRecordReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ResourceRecord"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_resource_record"],
+			TypeName:         "ibm_dns_resource_record",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ResourceRecord")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ReverseRecord",
+	}:
+		if err := (&controllersdns.ReverseRecordReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ReverseRecord"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_reverse_record"],
+			TypeName:         "ibm_dns_reverse_record",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ReverseRecord")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Secondary",
+	}:
+		if err := (&controllersdns.SecondaryReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Secondary"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_secondary"],
+			TypeName:         "ibm_dns_secondary",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Secondary")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Zone",
+	}:
+		if err := (&controllersdns.ZoneReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Zone"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_dns_zone"],
+			TypeName:         "ibm_dns_zone",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Zone")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "enterprise.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Enterprise",
+	}:
+		if err := (&controllersenterprise.EnterpriseReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Enterprise"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_enterprise"],
+			TypeName:         "ibm_enterprise",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Enterprise")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "enterprise.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Account",
+	}:
+		if err := (&controllersenterprise.AccountReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Account"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_enterprise_account"],
+			TypeName:         "ibm_enterprise_account",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Account")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "enterprise.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccountGroup",
+	}:
+		if err := (&controllersenterprise.AccountGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AccountGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_enterprise_account_group"],
+			TypeName:         "ibm_enterprise_account_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AccountGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "event.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "StreamsTopic",
+	}:
+		if err := (&controllersevent.StreamsTopicReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("StreamsTopic"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_event_streams_topic"],
+			TypeName:         "ibm_event_streams_topic",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "StreamsTopic")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "firewall.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Firewall",
+	}:
+		if err := (&controllersfirewall.FirewallReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Firewall"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_firewall"],
+			TypeName:         "ibm_firewall",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Firewall")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "firewall.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Policy",
+	}:
+		if err := (&controllersfirewall.PolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Policy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_firewall_policy"],
+			TypeName:         "ibm_firewall_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Policy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Action",
+	}:
+		if err := (&controllersfunction.ActionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Action"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_function_action"],
+			TypeName:         "ibm_function_action",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Action")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Namespace",
+	}:
+		if err := (&controllersfunction.NamespaceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Namespace"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_function_namespace"],
+			TypeName:         "ibm_function_namespace",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Namespace")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Package",
+	}:
+		if err := (&controllersfunction.PackageReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Package"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_function_package"],
+			TypeName:         "ibm_function_package",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Package")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Rule",
+	}:
+		if err := (&controllersfunction.RuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Rule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_function_rule"],
+			TypeName:         "ibm_function_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Rule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Trigger",
+	}:
+		if err := (&controllersfunction.TriggerReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Trigger"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_function_trigger"],
+			TypeName:         "ibm_function_trigger",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Trigger")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "hardware.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "FirewallShared",
+	}:
+		if err := (&controllershardware.FirewallSharedReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("FirewallShared"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_hardware_firewall_shared"],
+			TypeName:         "ibm_hardware_firewall_shared",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "FirewallShared")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "hpcs.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Hpcs",
+	}:
+		if err := (&controllershpcs.HpcsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Hpcs"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_hpcs"],
+			TypeName:         "ibm_hpcs",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Hpcs")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroup",
+	}:
+		if err := (&controllersiam.AccessGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AccessGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_access_group"],
+			TypeName:         "ibm_iam_access_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AccessGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroupDynamicRule",
+	}:
+		if err := (&controllersiam.AccessGroupDynamicRuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AccessGroupDynamicRule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_access_group_dynamic_rule"],
+			TypeName:         "ibm_iam_access_group_dynamic_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AccessGroupDynamicRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroupMembers",
+	}:
+		if err := (&controllersiam.AccessGroupMembersReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AccessGroupMembers"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_access_group_members"],
+			TypeName:         "ibm_iam_access_group_members",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AccessGroupMembers")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroupPolicy",
+	}:
+		if err := (&controllersiam.AccessGroupPolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AccessGroupPolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_access_group_policy"],
+			TypeName:         "ibm_iam_access_group_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AccessGroupPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccountSettings",
+	}:
+		if err := (&controllersiam.AccountSettingsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("AccountSettings"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_account_settings"],
+			TypeName:         "ibm_iam_account_settings",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "AccountSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
 		Version: "v1alpha1",
 		Kind:    "ApiKey",
 	}:
-		if err := (&controllersuser.ApiKeyReconciler{
+		if err := (&controllersiam.ApiKeyReconciler{
 			Client:           mgr.GetClient(),
 			Log:              ctrl.Log.WithName("controllers").WithName("ApiKey"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_user_api_key"],
-			TypeName:         "metal_user_api_key",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_api_key"],
+			TypeName:         "ibm_iam_api_key",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
 			setupLog.Error(err, "unable to create controller", "controller", "ApiKey")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "virtual.ibm.kubeform.com",
+		Group:   "iam.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Circuit",
+		Kind:    "AuthorizationPolicy",
 	}:
-		if err := (&controllersvirtual.CircuitReconciler{
+		if err := (&controllersiam.AuthorizationPolicyReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Circuit"),
+			Log:              ctrl.Log.WithName("controllers").WithName("AuthorizationPolicy"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_virtual_circuit"],
-			TypeName:         "metal_virtual_circuit",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_authorization_policy"],
+			TypeName:         "ibm_iam_authorization_policy",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Circuit")
+			setupLog.Error(err, "unable to create controller", "controller", "AuthorizationPolicy")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "vlan.ibm.kubeform.com",
+		Group:   "iam.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Vlan",
+		Kind:    "AuthorizationPolicyDetach",
 	}:
-		if err := (&controllersvlan.VlanReconciler{
+		if err := (&controllersiam.AuthorizationPolicyDetachReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Vlan"),
+			Log:              ctrl.Log.WithName("controllers").WithName("AuthorizationPolicyDetach"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_vlan"],
-			TypeName:         "metal_vlan",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_authorization_policy_detach"],
+			TypeName:         "ibm_iam_authorization_policy_detach",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Vlan")
+			setupLog.Error(err, "unable to create controller", "controller", "AuthorizationPolicyDetach")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "volume.ibm.kubeform.com",
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CustomRole",
+	}:
+		if err := (&controllersiam.CustomRoleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("CustomRole"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_custom_role"],
+			TypeName:         "ibm_iam_custom_role",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "CustomRole")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServiceAPIKey",
+	}:
+		if err := (&controllersiam.ServiceAPIKeyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ServiceAPIKey"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_service_api_key"],
+			TypeName:         "ibm_iam_service_api_key",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ServiceAPIKey")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServiceID",
+	}:
+		if err := (&controllersiam.ServiceIDReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ServiceID"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_service_id"],
+			TypeName:         "ibm_iam_service_id",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ServiceID")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServicePolicy",
+	}:
+		if err := (&controllersiam.ServicePolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ServicePolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_service_policy"],
+			TypeName:         "ibm_iam_service_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ServicePolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "UserInvite",
+	}:
+		if err := (&controllersiam.UserInviteReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("UserInvite"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_user_invite"],
+			TypeName:         "ibm_iam_user_invite",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "UserInvite")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "UserPolicy",
+	}:
+		if err := (&controllersiam.UserPolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("UserPolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_user_policy"],
+			TypeName:         "ibm_iam_user_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "UserPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "UserSettings",
+	}:
+		if err := (&controllersiam.UserSettingsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("UserSettings"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_iam_user_settings"],
+			TypeName:         "ibm_iam_user_settings",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "UserSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ipsec.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Vpn",
+	}:
+		if err := (&controllersipsec.VpnReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Vpn"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_ipsec_vpn"],
+			TypeName:         "ibm_ipsec_vpn",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Vpn")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHost",
+	}:
+		if err := (&controllersis.DedicatedHostReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DedicatedHost"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_dedicated_host"],
+			TypeName:         "ibm_is_dedicated_host",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DedicatedHost")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHostDiskManagement",
+	}:
+		if err := (&controllersis.DedicatedHostDiskManagementReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DedicatedHostDiskManagement"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_dedicated_host_disk_management"],
+			TypeName:         "ibm_is_dedicated_host_disk_management",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DedicatedHostDiskManagement")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHostGroup",
+	}:
+		if err := (&controllersis.DedicatedHostGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("DedicatedHostGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_dedicated_host_group"],
+			TypeName:         "ibm_is_dedicated_host_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "DedicatedHostGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "FloatingIP",
+	}:
+		if err := (&controllersis.FloatingIPReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("FloatingIP"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_floating_ip"],
+			TypeName:         "ibm_is_floating_ip",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "FloatingIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "FlowLog",
+	}:
+		if err := (&controllersis.FlowLogReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("FlowLog"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_flow_log"],
+			TypeName:         "ibm_is_flow_log",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "FlowLog")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "IkePolicy",
+	}:
+		if err := (&controllersis.IkePolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("IkePolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_ike_policy"],
+			TypeName:         "ibm_is_ike_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "IkePolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Image",
+	}:
+		if err := (&controllersis.ImageReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Image"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_image"],
+			TypeName:         "ibm_is_image",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Image")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&controllersis.InstanceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Instance"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance"],
+			TypeName:         "ibm_is_instance",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceDiskManagement",
+	}:
+		if err := (&controllersis.InstanceDiskManagementReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceDiskManagement"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_disk_management"],
+			TypeName:         "ibm_is_instance_disk_management",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceDiskManagement")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroup",
+	}:
+		if err := (&controllersis.InstanceGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_group"],
+			TypeName:         "ibm_is_instance_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupManager",
+	}:
+		if err := (&controllersis.InstanceGroupManagerReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceGroupManager"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_group_manager"],
+			TypeName:         "ibm_is_instance_group_manager",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceGroupManager")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupManagerAction",
+	}:
+		if err := (&controllersis.InstanceGroupManagerActionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceGroupManagerAction"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_group_manager_action"],
+			TypeName:         "ibm_is_instance_group_manager_action",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceGroupManagerAction")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupManagerPolicy",
+	}:
+		if err := (&controllersis.InstanceGroupManagerPolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceGroupManagerPolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_group_manager_policy"],
+			TypeName:         "ibm_is_instance_group_manager_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceGroupManagerPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupMembership",
+	}:
+		if err := (&controllersis.InstanceGroupMembershipReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceGroupMembership"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_group_membership"],
+			TypeName:         "ibm_is_instance_group_membership",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceGroupMembership")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceTemplate",
+	}:
+		if err := (&controllersis.InstanceTemplateReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceTemplate"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_template"],
+			TypeName:         "ibm_is_instance_template",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceTemplate")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceVolumeAttachment",
+	}:
+		if err := (&controllersis.InstanceVolumeAttachmentReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InstanceVolumeAttachment"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_instance_volume_attachment"],
+			TypeName:         "ibm_is_instance_volume_attachment",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InstanceVolumeAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "IpsecPolicy",
+	}:
+		if err := (&controllersis.IpsecPolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("IpsecPolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_ipsec_policy"],
+			TypeName:         "ibm_is_ipsec_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "IpsecPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Lb",
+	}:
+		if err := (&controllersis.LbReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Lb"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_lb"],
+			TypeName:         "ibm_is_lb",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Lb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbListener",
+	}:
+		if err := (&controllersis.LbListenerReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("LbListener"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_lb_listener"],
+			TypeName:         "ibm_is_lb_listener",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "LbListener")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbListenerPolicy",
+	}:
+		if err := (&controllersis.LbListenerPolicyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("LbListenerPolicy"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_lb_listener_policy"],
+			TypeName:         "ibm_is_lb_listener_policy",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "LbListenerPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbListenerPolicyRule",
+	}:
+		if err := (&controllersis.LbListenerPolicyRuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("LbListenerPolicyRule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_lb_listener_policy_rule"],
+			TypeName:         "ibm_is_lb_listener_policy_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "LbListenerPolicyRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbPool",
+	}:
+		if err := (&controllersis.LbPoolReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("LbPool"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_lb_pool"],
+			TypeName:         "ibm_is_lb_pool",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "LbPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbPoolMember",
+	}:
+		if err := (&controllersis.LbPoolMemberReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("LbPoolMember"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_lb_pool_member"],
+			TypeName:         "ibm_is_lb_pool_member",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "LbPoolMember")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkACL",
+	}:
+		if err := (&controllersis.NetworkACLReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("NetworkACL"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_network_acl"],
+			TypeName:         "ibm_is_network_acl",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "NetworkACL")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkACLRule",
+	}:
+		if err := (&controllersis.NetworkACLRuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("NetworkACLRule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_network_acl_rule"],
+			TypeName:         "ibm_is_network_acl_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "NetworkACLRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PublicGateway",
+	}:
+		if err := (&controllersis.PublicGatewayReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("PublicGateway"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_public_gateway"],
+			TypeName:         "ibm_is_public_gateway",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "PublicGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroup",
+	}:
+		if err := (&controllersis.SecurityGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("SecurityGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_security_group"],
+			TypeName:         "ibm_is_security_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "SecurityGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroupNetworkInterfaceAttachment",
+	}:
+		if err := (&controllersis.SecurityGroupNetworkInterfaceAttachmentReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("SecurityGroupNetworkInterfaceAttachment"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_security_group_network_interface_attachment"],
+			TypeName:         "ibm_is_security_group_network_interface_attachment",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "SecurityGroupNetworkInterfaceAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroupRule",
+	}:
+		if err := (&controllersis.SecurityGroupRuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("SecurityGroupRule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_security_group_rule"],
+			TypeName:         "ibm_is_security_group_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "SecurityGroupRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroupTarget",
+	}:
+		if err := (&controllersis.SecurityGroupTargetReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("SecurityGroupTarget"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_security_group_target"],
+			TypeName:         "ibm_is_security_group_target",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "SecurityGroupTarget")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Snapshot",
+	}:
+		if err := (&controllersis.SnapshotReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Snapshot"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_snapshot"],
+			TypeName:         "ibm_is_snapshot",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Snapshot")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SshKey",
+	}:
+		if err := (&controllersis.SshKeyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("SshKey"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_ssh_key"],
+			TypeName:         "ibm_is_ssh_key",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "SshKey")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Subnet",
+	}:
+		if err := (&controllersis.SubnetReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Subnet"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_subnet"],
+			TypeName:         "ibm_is_subnet",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Subnet")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SubnetNetworkACLAttachment",
+	}:
+		if err := (&controllersis.SubnetNetworkACLAttachmentReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("SubnetNetworkACLAttachment"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_subnet_network_acl_attachment"],
+			TypeName:         "ibm_is_subnet_network_acl_attachment",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "SubnetNetworkACLAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SubnetReservedIP",
+	}:
+		if err := (&controllersis.SubnetReservedIPReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("SubnetReservedIP"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_subnet_reserved_ip"],
+			TypeName:         "ibm_is_subnet_reserved_ip",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "SubnetReservedIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VirtualEndpointGateway",
+	}:
+		if err := (&controllersis.VirtualEndpointGatewayReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VirtualEndpointGateway"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_virtual_endpoint_gateway"],
+			TypeName:         "ibm_is_virtual_endpoint_gateway",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VirtualEndpointGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VirtualEndpointGatewayIP",
+	}:
+		if err := (&controllersis.VirtualEndpointGatewayIPReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VirtualEndpointGatewayIP"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_virtual_endpoint_gateway_ip"],
+			TypeName:         "ibm_is_virtual_endpoint_gateway_ip",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VirtualEndpointGatewayIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
 		Version: "v1alpha1",
 		Kind:    "Volume",
 	}:
-		if err := (&controllersvolume.VolumeReconciler{
+		if err := (&controllersis.VolumeReconciler{
 			Client:           mgr.GetClient(),
 			Log:              ctrl.Log.WithName("controllers").WithName("Volume"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_volume"],
-			TypeName:         "metal_volume",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_volume"],
+			TypeName:         "ibm_is_volume",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
 			setupLog.Error(err, "unable to create controller", "controller", "Volume")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "volume.ibm.kubeform.com",
+		Group:   "is.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Attachment",
+		Kind:    "Vpc",
 	}:
-		if err := (&controllersvolume.AttachmentReconciler{
+		if err := (&controllersis.VpcReconciler{
 			Client:           mgr.GetClient(),
-			Log:              ctrl.Log.WithName("controllers").WithName("Attachment"),
+			Log:              ctrl.Log.WithName("controllers").WithName("Vpc"),
 			Scheme:           mgr.GetScheme(),
 			Gvk:              gvk,
-			Provider:         ibm.Provider(),
-			Resource:         ibm.Provider().ResourcesMap["metal_volume_attachment"],
-			TypeName:         "metal_volume_attachment",
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_vpc"],
+			TypeName:         "ibm_is_vpc",
 			WatchOnlyDefault: watchOnlyDefault,
 		}).SetupWithManager(ctx, mgr, auditor); err != nil {
-			setupLog.Error(err, "unable to create controller", "controller", "Attachment")
+			setupLog.Error(err, "unable to create controller", "controller", "Vpc")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcAddressPrefix",
+	}:
+		if err := (&controllersis.VpcAddressPrefixReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpcAddressPrefix"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_vpc_address_prefix"],
+			TypeName:         "ibm_is_vpc_address_prefix",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpcAddressPrefix")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcRoute",
+	}:
+		if err := (&controllersis.VpcRouteReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpcRoute"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_vpc_route"],
+			TypeName:         "ibm_is_vpc_route",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpcRoute")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcRoutingTable",
+	}:
+		if err := (&controllersis.VpcRoutingTableReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpcRoutingTable"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_vpc_routing_table"],
+			TypeName:         "ibm_is_vpc_routing_table",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpcRoutingTable")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcRoutingTableRoute",
+	}:
+		if err := (&controllersis.VpcRoutingTableRouteReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpcRoutingTableRoute"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_vpc_routing_table_route"],
+			TypeName:         "ibm_is_vpc_routing_table_route",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpcRoutingTableRoute")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpnGateway",
+	}:
+		if err := (&controllersis.VpnGatewayReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpnGateway"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_vpn_gateway"],
+			TypeName:         "ibm_is_vpn_gateway",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpnGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpnGatewayConnection",
+	}:
+		if err := (&controllersis.VpnGatewayConnectionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpnGatewayConnection"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_is_vpn_gateway_connection"],
+			TypeName:         "ibm_is_vpn_gateway_connection",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpnGatewayConnection")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kms.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&controllerskms.KeyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Key"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_kms_key"],
+			TypeName:         "ibm_kms_key",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kms.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "KeyAlias",
+	}:
+		if err := (&controllerskms.KeyAliasReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("KeyAlias"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_kms_key_alias"],
+			TypeName:         "ibm_kms_key_alias",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "KeyAlias")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kms.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "KeyRings",
+	}:
+		if err := (&controllerskms.KeyRingsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("KeyRings"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_kms_key_rings"],
+			TypeName:         "ibm_kms_key_rings",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "KeyRings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kp.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&controllerskp.KeyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Key"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_kp_key"],
+			TypeName:         "ibm_kp_key",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Lb",
+	}:
+		if err := (&controllerslb.LbReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Lb"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lb"],
+			TypeName:         "ibm_lb",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Lb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Service",
+	}:
+		if err := (&controllerslb.ServiceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Service"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lb_service"],
+			TypeName:         "ibm_lb_service",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Service")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServiceGroup",
+	}:
+		if err := (&controllerslb.ServiceGroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ServiceGroup"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lb_service_group"],
+			TypeName:         "ibm_lb_service_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ServiceGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Vpx",
+	}:
+		if err := (&controllerslb.VpxReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Vpx"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lb_vpx"],
+			TypeName:         "ibm_lb_vpx",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Vpx")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpxHa",
+	}:
+		if err := (&controllerslb.VpxHaReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpxHa"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lb_vpx_ha"],
+			TypeName:         "ibm_lb_vpx_ha",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpxHa")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpxService",
+	}:
+		if err := (&controllerslb.VpxServiceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpxService"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lb_vpx_service"],
+			TypeName:         "ibm_lb_vpx_service",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpxService")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpxVip",
+	}:
+		if err := (&controllerslb.VpxVipReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VpxVip"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lb_vpx_vip"],
+			TypeName:         "ibm_lb_vpx_vip",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VpxVip")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lbaas.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Lbaas",
+	}:
+		if err := (&controllerslbaas.LbaasReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Lbaas"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lbaas"],
+			TypeName:         "ibm_lbaas",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Lbaas")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lbaas.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "HealthMonitor",
+	}:
+		if err := (&controllerslbaas.HealthMonitorReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("HealthMonitor"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lbaas_health_monitor"],
+			TypeName:         "ibm_lbaas_health_monitor",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "HealthMonitor")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lbaas.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServerInstanceAttachment",
+	}:
+		if err := (&controllerslbaas.ServerInstanceAttachmentReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ServerInstanceAttachment"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_lbaas_server_instance_attachment"],
+			TypeName:         "ibm_lbaas_server_instance_attachment",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ServerInstanceAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "multi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VlanFirewall",
+	}:
+		if err := (&controllersmulti.VlanFirewallReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VlanFirewall"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_multi_vlan_firewall"],
+			TypeName:         "ibm_multi_vlan_firewall",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VlanFirewall")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Gateway",
+	}:
+		if err := (&controllersnetwork.GatewayReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Gateway"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_network_gateway"],
+			TypeName:         "ibm_network_gateway",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Gateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GatewayVLANAssociation",
+	}:
+		if err := (&controllersnetwork.GatewayVLANAssociationReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("GatewayVLANAssociation"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_network_gateway_vlan_association"],
+			TypeName:         "ibm_network_gateway_vlan_association",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "GatewayVLANAssociation")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InterfaceSgAttachment",
+	}:
+		if err := (&controllersnetwork.InterfaceSgAttachmentReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("InterfaceSgAttachment"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_network_interface_sg_attachment"],
+			TypeName:         "ibm_network_interface_sg_attachment",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "InterfaceSgAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PublicIP",
+	}:
+		if err := (&controllersnetwork.PublicIPReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("PublicIP"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_network_public_ip"],
+			TypeName:         "ibm_network_public_ip",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "PublicIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Vlan",
+	}:
+		if err := (&controllersnetwork.VlanReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Vlan"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_network_vlan"],
+			TypeName:         "ibm_network_vlan",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Vlan")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VlanSpanning",
+	}:
+		if err := (&controllersnetwork.VlanSpanningReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VlanSpanning"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_network_vlan_spanning"],
+			TypeName:         "ibm_network_vlan_spanning",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VlanSpanning")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ob.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Logging",
+	}:
+		if err := (&controllersob.LoggingReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Logging"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_ob_logging"],
+			TypeName:         "ibm_ob_logging",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Logging")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ob.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Monitoring",
+	}:
+		if err := (&controllersob.MonitoringReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Monitoring"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_ob_monitoring"],
+			TypeName:         "ibm_ob_monitoring",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Monitoring")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "object.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "StorageAccount",
+	}:
+		if err := (&controllersobject.StorageAccountReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("StorageAccount"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_object_storage_account"],
+			TypeName:         "ibm_object_storage_account",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "StorageAccount")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "org.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Org",
+	}:
+		if err := (&controllersorg.OrgReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Org"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_org"],
+			TypeName:         "ibm_org",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Org")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Capture",
+	}:
+		if err := (&controllerspi.CaptureReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Capture"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_capture"],
+			TypeName:         "ibm_pi_capture",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Capture")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Image",
+	}:
+		if err := (&controllerspi.ImageReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Image"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_image"],
+			TypeName:         "ibm_pi_image",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Image")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&controllerspi.InstanceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Instance"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_instance"],
+			TypeName:         "ibm_pi_instance",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&controllerspi.KeyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Key"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_key"],
+			TypeName:         "ibm_pi_key",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Network",
+	}:
+		if err := (&controllerspi.NetworkReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Network"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_network"],
+			TypeName:         "ibm_pi_network",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Network")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkPort",
+	}:
+		if err := (&controllerspi.NetworkPortReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("NetworkPort"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_network_port"],
+			TypeName:         "ibm_pi_network_port",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "NetworkPort")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkPortAttach",
+	}:
+		if err := (&controllerspi.NetworkPortAttachReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("NetworkPortAttach"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_network_port_attach"],
+			TypeName:         "ibm_pi_network_port_attach",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "NetworkPortAttach")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Operations",
+	}:
+		if err := (&controllerspi.OperationsReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Operations"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_operations"],
+			TypeName:         "ibm_pi_operations",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Operations")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Snapshot",
+	}:
+		if err := (&controllerspi.SnapshotReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Snapshot"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_snapshot"],
+			TypeName:         "ibm_pi_snapshot",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Snapshot")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Volume",
+	}:
+		if err := (&controllerspi.VolumeReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Volume"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_volume"],
+			TypeName:         "ibm_pi_volume",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Volume")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VolumeAttach",
+	}:
+		if err := (&controllerspi.VolumeAttachReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("VolumeAttach"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pi_volume_attach"],
+			TypeName:         "ibm_pi_volume_attach",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "VolumeAttach")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pn.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ApplicationChrome",
+	}:
+		if err := (&controllerspn.ApplicationChromeReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ApplicationChrome"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_pn_application_chrome"],
+			TypeName:         "ibm_pn_application_chrome",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ApplicationChrome")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Group",
+	}:
+		if err := (&controllersresource.GroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Group"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_resource_group"],
+			TypeName:         "ibm_resource_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Group")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&controllersresource.InstanceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Instance"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_resource_instance"],
+			TypeName:         "ibm_resource_instance",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&controllersresource.KeyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Key"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_resource_key"],
+			TypeName:         "ibm_resource_key",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Tag",
+	}:
+		if err := (&controllersresource.TagReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Tag"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_resource_tag"],
+			TypeName:         "ibm_resource_tag",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Tag")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Cluster",
+	}:
+		if err := (&controllerssatellite.ClusterReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Cluster"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_satellite_cluster"],
+			TypeName:         "ibm_satellite_cluster",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Cluster")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ClusterWorkerPool",
+	}:
+		if err := (&controllerssatellite.ClusterWorkerPoolReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("ClusterWorkerPool"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_satellite_cluster_worker_pool"],
+			TypeName:         "ibm_satellite_cluster_worker_pool",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "ClusterWorkerPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Host",
+	}:
+		if err := (&controllerssatellite.HostReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Host"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_satellite_host"],
+			TypeName:         "ibm_satellite_host",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Host")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Location",
+	}:
+		if err := (&controllerssatellite.LocationReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Location"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_satellite_location"],
+			TypeName:         "ibm_satellite_location",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Location")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "schematics.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Action",
+	}:
+		if err := (&controllersschematics.ActionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Action"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_schematics_action"],
+			TypeName:         "ibm_schematics_action",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Action")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "schematics.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Job",
+	}:
+		if err := (&controllersschematics.JobReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Job"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_schematics_job"],
+			TypeName:         "ibm_schematics_job",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Job")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "schematics.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Workspace",
+	}:
+		if err := (&controllersschematics.WorkspaceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Workspace"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_schematics_workspace"],
+			TypeName:         "ibm_schematics_workspace",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Workspace")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "security.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Group",
+	}:
+		if err := (&controllerssecurity.GroupReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Group"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_security_group"],
+			TypeName:         "ibm_security_group",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Group")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "security.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GroupRule",
+	}:
+		if err := (&controllerssecurity.GroupRuleReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("GroupRule"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_security_group_rule"],
+			TypeName:         "ibm_security_group_rule",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "GroupRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "service.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&controllersservice.InstanceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Instance"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_service_instance"],
+			TypeName:         "ibm_service_instance",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "service.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&controllersservice.KeyReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Key"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_service_key"],
+			TypeName:         "ibm_service_key",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "space.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Space",
+	}:
+		if err := (&controllersspace.SpaceReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Space"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_space"],
+			TypeName:         "ibm_space",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Space")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ssl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Certificate",
+	}:
+		if err := (&controllersssl.CertificateReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Certificate"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_ssl_certificate"],
+			TypeName:         "ibm_ssl_certificate",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Certificate")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "storage.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Block",
+	}:
+		if err := (&controllersstorage.BlockReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Block"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_storage_block"],
+			TypeName:         "ibm_storage_block",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Block")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "storage.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Evault",
+	}:
+		if err := (&controllersstorage.EvaultReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Evault"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_storage_evault"],
+			TypeName:         "ibm_storage_evault",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Evault")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "storage.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "File",
+	}:
+		if err := (&controllersstorage.FileReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("File"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_storage_file"],
+			TypeName:         "ibm_storage_file",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "File")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "subnet.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Subnet",
+	}:
+		if err := (&controllerssubnet.SubnetReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Subnet"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_subnet"],
+			TypeName:         "ibm_subnet",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Subnet")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "tg.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Connection",
+	}:
+		if err := (&controllerstg.ConnectionReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Connection"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_tg_connection"],
+			TypeName:         "ibm_tg_connection",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Connection")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "tg.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Gateway",
+	}:
+		if err := (&controllerstg.GatewayReconciler{
+			Client:           mgr.GetClient(),
+			Log:              ctrl.Log.WithName("controllers").WithName("Gateway"),
+			Scheme:           mgr.GetScheme(),
+			Gvk:              gvk,
+			Provider:         _provider,
+			Resource:         _provider.ResourcesMap["ibm_tg_gateway"],
+			TypeName:         "ibm_tg_gateway",
+			WatchOnlyDefault: watchOnlyDefault,
+		}).SetupWithManager(ctx, mgr, auditor); err != nil {
+			setupLog.Error(err, "unable to create controller", "controller", "Gateway")
 			return err
 		}
 
@@ -605,174 +4191,1938 @@ func SetupManager(ctx context.Context, mgr manager.Manager, gvk schema.GroupVers
 func SetupWebhook(mgr manager.Manager, gvk schema.GroupVersionKind) error {
 	switch gvk {
 	case schema.GroupVersionKind{
-		Group:   "bgp.ibm.kubeform.com",
+		Group:   "apigateway.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Session",
+		Kind:    "Endpoint",
 	}:
-		if err := (&bgpv1alpha1.Session{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Session")
+		if err := (&apigatewayv1alpha1.Endpoint{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Endpoint")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "connection.ibm.kubeform.com",
+		Group:   "apigateway.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Connection",
+		Kind:    "EndpointSubscription",
 	}:
-		if err := (&connectionv1alpha1.Connection{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Connection")
+		if err := (&apigatewayv1alpha1.EndpointSubscription{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "EndpointSubscription")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "device.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Device",
+		Kind:    "App",
 	}:
-		if err := (&devicev1alpha1.Device{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Device")
+		if err := (&appv1alpha1.App{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "App")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "device.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "NetworkType",
+		Kind:    "ConfigEnvironment",
 	}:
-		if err := (&devicev1alpha1.NetworkType{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "NetworkType")
+		if err := (&appv1alpha1.ConfigEnvironment{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ConfigEnvironment")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "gateway.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Gateway",
+		Kind:    "ConfigFeature",
 	}:
-		if err := (&gatewayv1alpha1.Gateway{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Gateway")
+		if err := (&appv1alpha1.ConfigFeature{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ConfigFeature")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "ip.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Attachment",
+		Kind:    "DomainPrivate",
 	}:
-		if err := (&ipv1alpha1.Attachment{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Attachment")
+		if err := (&appv1alpha1.DomainPrivate{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DomainPrivate")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "organization.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Organization",
+		Kind:    "DomainShared",
 	}:
-		if err := (&organizationv1alpha1.Organization{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Organization")
+		if err := (&appv1alpha1.DomainShared{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DomainShared")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "port.ibm.kubeform.com",
+		Group:   "app.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "VlanAttachment",
+		Kind:    "Route",
 	}:
-		if err := (&portv1alpha1.VlanAttachment{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "VlanAttachment")
+		if err := (&appv1alpha1.Route{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Route")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "project.ibm.kubeform.com",
+		Group:   "cdn.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Project",
+		Kind:    "Cdn",
 	}:
-		if err := (&projectv1alpha1.Project{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Project")
+		if err := (&cdnv1alpha1.Cdn{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Cdn")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "project.ibm.kubeform.com",
+		Group:   "certificate.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "ApiKey",
+		Kind:    "ManagerImport",
 	}:
-		if err := (&projectv1alpha1.ApiKey{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "ApiKey")
+		if err := (&certificatev1alpha1.ManagerImport{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ManagerImport")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "project.ibm.kubeform.com",
+		Group:   "certificate.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ManagerOrder",
+	}:
+		if err := (&certificatev1alpha1.ManagerOrder{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ManagerOrder")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Cis",
+	}:
+		if err := (&cisv1alpha1.Cis{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Cis")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CacheSettings",
+	}:
+		if err := (&cisv1alpha1.CacheSettings{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "CacheSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CertificateOrder",
+	}:
+		if err := (&cisv1alpha1.CertificateOrder{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "CertificateOrder")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CertificateUpload",
+	}:
+		if err := (&cisv1alpha1.CertificateUpload{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "CertificateUpload")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CustomPage",
+	}:
+		if err := (&cisv1alpha1.CustomPage{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "CustomPage")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DnsRecord",
+	}:
+		if err := (&cisv1alpha1.DnsRecord{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DnsRecord")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DnsRecordsImport",
+	}:
+		if err := (&cisv1alpha1.DnsRecordsImport{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DnsRecordsImport")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Domain",
+	}:
+		if err := (&cisv1alpha1.Domain{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Domain")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DomainSettings",
+	}:
+		if err := (&cisv1alpha1.DomainSettings{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DomainSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "EdgeFunctionsAction",
+	}:
+		if err := (&cisv1alpha1.EdgeFunctionsAction{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "EdgeFunctionsAction")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "EdgeFunctionsTrigger",
+	}:
+		if err := (&cisv1alpha1.EdgeFunctionsTrigger{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "EdgeFunctionsTrigger")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Filter",
+	}:
+		if err := (&cisv1alpha1.Filter{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Filter")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Firewall",
+	}:
+		if err := (&cisv1alpha1.Firewall{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Firewall")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GlobalLoadBalancer",
+	}:
+		if err := (&cisv1alpha1.GlobalLoadBalancer{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "GlobalLoadBalancer")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Healthcheck",
+	}:
+		if err := (&cisv1alpha1.Healthcheck{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Healthcheck")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "OriginPool",
+	}:
+		if err := (&cisv1alpha1.OriginPool{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "OriginPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PageRule",
+	}:
+		if err := (&cisv1alpha1.PageRule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "PageRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "RangeApp",
+	}:
+		if err := (&cisv1alpha1.RangeApp{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "RangeApp")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "RateLimit",
+	}:
+		if err := (&cisv1alpha1.RateLimit{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "RateLimit")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Routing",
+	}:
+		if err := (&cisv1alpha1.Routing{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Routing")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "TlsSettings",
+	}:
+		if err := (&cisv1alpha1.TlsSettings{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "TlsSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WafGroup",
+	}:
+		if err := (&cisv1alpha1.WafGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "WafGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WafPackage",
+	}:
+		if err := (&cisv1alpha1.WafPackage{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "WafPackage")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cis.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WafRule",
+	}:
+		if err := (&cisv1alpha1.WafRule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "WafRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Catalog",
+	}:
+		if err := (&cmv1alpha1.Catalog{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Catalog")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Offering",
+	}:
+		if err := (&cmv1alpha1.Offering{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Offering")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "OfferingInstance",
+	}:
+		if err := (&cmv1alpha1.OfferingInstance{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "OfferingInstance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cm.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Version",
+	}:
+		if err := (&cmv1alpha1.Version{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Version")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AutoscaleGroup",
+	}:
+		if err := (&computev1alpha1.AutoscaleGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AutoscaleGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AutoscalePolicy",
+	}:
+		if err := (&computev1alpha1.AutoscalePolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AutoscalePolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "BareMetal",
+	}:
+		if err := (&computev1alpha1.BareMetal{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "BareMetal")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHost",
+	}:
+		if err := (&computev1alpha1.DedicatedHost{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DedicatedHost")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Monitor",
+	}:
+		if err := (&computev1alpha1.Monitor{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Monitor")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PlacementGroup",
+	}:
+		if err := (&computev1alpha1.PlacementGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "PlacementGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ProvisioningHook",
+	}:
+		if err := (&computev1alpha1.ProvisioningHook{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ProvisioningHook")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
 		Kind:    "SshKey",
 	}:
-		if err := (&projectv1alpha1.SshKey{}).SetupWebhookWithManager(mgr); err != nil {
+		if err := (&computev1alpha1.SshKey{}).SetupWebhookWithManager(mgr); err != nil {
 			setupLog.Error(err, "unable to create webhook", "webhook", "SshKey")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "reserved.ibm.kubeform.com",
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "IpBlock",
+		Kind:    "SslCertificate",
 	}:
-		if err := (&reservedv1alpha1.IpBlock{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "IpBlock")
+		if err := (&computev1alpha1.SslCertificate{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SslCertificate")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "spot.ibm.kubeform.com",
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "MarketRequest",
+		Kind:    "User",
 	}:
-		if err := (&spotv1alpha1.MarketRequest{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "MarketRequest")
+		if err := (&computev1alpha1.User{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "User")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "ssh.ibm.kubeform.com",
+		Group:   "compute.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Key",
+		Kind:    "VmInstance",
 	}:
-		if err := (&sshv1alpha1.Key{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Key")
+		if err := (&computev1alpha1.VmInstance{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VmInstance")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "user.ibm.kubeform.com",
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Addons",
+	}:
+		if err := (&containerv1alpha1.Addons{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Addons")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Alb",
+	}:
+		if err := (&containerv1alpha1.Alb{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Alb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AlbCert",
+	}:
+		if err := (&containerv1alpha1.AlbCert{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AlbCert")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ApiKeyReset",
+	}:
+		if err := (&containerv1alpha1.ApiKeyReset{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ApiKeyReset")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "BindService",
+	}:
+		if err := (&containerv1alpha1.BindService{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "BindService")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Cluster",
+	}:
+		if err := (&containerv1alpha1.Cluster{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Cluster")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ClusterFeature",
+	}:
+		if err := (&containerv1alpha1.ClusterFeature{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ClusterFeature")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcAlb",
+	}:
+		if err := (&containerv1alpha1.VpcAlb{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpcAlb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcCluster",
+	}:
+		if err := (&containerv1alpha1.VpcCluster{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpcCluster")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcWorkerPool",
+	}:
+		if err := (&containerv1alpha1.VpcWorkerPool{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpcWorkerPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WorkerPool",
+	}:
+		if err := (&containerv1alpha1.WorkerPool{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "WorkerPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "container.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "WorkerPoolZoneAttachment",
+	}:
+		if err := (&containerv1alpha1.WorkerPoolZoneAttachment{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "WorkerPoolZoneAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cos.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Bucket",
+	}:
+		if err := (&cosv1alpha1.Bucket{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Bucket")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cos.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "BucketObject",
+	}:
+		if err := (&cosv1alpha1.BucketObject{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "BucketObject")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cr.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Namespace",
+	}:
+		if err := (&crv1alpha1.Namespace{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Namespace")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "cr.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "RetentionPolicy",
+	}:
+		if err := (&crv1alpha1.RetentionPolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "RetentionPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "database.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Database",
+	}:
+		if err := (&databasev1alpha1.Database{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Database")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Gateway",
+	}:
+		if err := (&dlv1alpha1.Gateway{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Gateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ProviderGateway",
+	}:
+		if err := (&dlv1alpha1.ProviderGateway{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ProviderGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VirtualConnection",
+	}:
+		if err := (&dlv1alpha1.VirtualConnection{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VirtualConnection")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Domain",
+	}:
+		if err := (&dnsv1alpha1.Domain{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Domain")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DomainRegistrationNameservers",
+	}:
+		if err := (&dnsv1alpha1.DomainRegistrationNameservers{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DomainRegistrationNameservers")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Glb",
+	}:
+		if err := (&dnsv1alpha1.Glb{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Glb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GlbMonitor",
+	}:
+		if err := (&dnsv1alpha1.GlbMonitor{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "GlbMonitor")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GlbPool",
+	}:
+		if err := (&dnsv1alpha1.GlbPool{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "GlbPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PermittedNetwork",
+	}:
+		if err := (&dnsv1alpha1.PermittedNetwork{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "PermittedNetwork")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Record",
+	}:
+		if err := (&dnsv1alpha1.Record{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Record")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ResourceRecord",
+	}:
+		if err := (&dnsv1alpha1.ResourceRecord{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ResourceRecord")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ReverseRecord",
+	}:
+		if err := (&dnsv1alpha1.ReverseRecord{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ReverseRecord")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Secondary",
+	}:
+		if err := (&dnsv1alpha1.Secondary{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Secondary")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "dns.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Zone",
+	}:
+		if err := (&dnsv1alpha1.Zone{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Zone")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "enterprise.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Enterprise",
+	}:
+		if err := (&enterprisev1alpha1.Enterprise{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Enterprise")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "enterprise.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Account",
+	}:
+		if err := (&enterprisev1alpha1.Account{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Account")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "enterprise.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccountGroup",
+	}:
+		if err := (&enterprisev1alpha1.AccountGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AccountGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "event.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "StreamsTopic",
+	}:
+		if err := (&eventv1alpha1.StreamsTopic{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "StreamsTopic")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "firewall.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Firewall",
+	}:
+		if err := (&firewallv1alpha1.Firewall{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Firewall")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "firewall.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Policy",
+	}:
+		if err := (&firewallv1alpha1.Policy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Policy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Action",
+	}:
+		if err := (&functionv1alpha1.Action{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Action")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Namespace",
+	}:
+		if err := (&functionv1alpha1.Namespace{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Namespace")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Package",
+	}:
+		if err := (&functionv1alpha1.Package{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Package")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Rule",
+	}:
+		if err := (&functionv1alpha1.Rule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Rule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "function.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Trigger",
+	}:
+		if err := (&functionv1alpha1.Trigger{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Trigger")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "hardware.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "FirewallShared",
+	}:
+		if err := (&hardwarev1alpha1.FirewallShared{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "FirewallShared")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "hpcs.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Hpcs",
+	}:
+		if err := (&hpcsv1alpha1.Hpcs{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Hpcs")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroup",
+	}:
+		if err := (&iamv1alpha1.AccessGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AccessGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroupDynamicRule",
+	}:
+		if err := (&iamv1alpha1.AccessGroupDynamicRule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AccessGroupDynamicRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroupMembers",
+	}:
+		if err := (&iamv1alpha1.AccessGroupMembers{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AccessGroupMembers")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccessGroupPolicy",
+	}:
+		if err := (&iamv1alpha1.AccessGroupPolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AccessGroupPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "AccountSettings",
+	}:
+		if err := (&iamv1alpha1.AccountSettings{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AccountSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
 		Version: "v1alpha1",
 		Kind:    "ApiKey",
 	}:
-		if err := (&userv1alpha1.ApiKey{}).SetupWebhookWithManager(mgr); err != nil {
+		if err := (&iamv1alpha1.ApiKey{}).SetupWebhookWithManager(mgr); err != nil {
 			setupLog.Error(err, "unable to create webhook", "webhook", "ApiKey")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "virtual.ibm.kubeform.com",
+		Group:   "iam.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Circuit",
+		Kind:    "AuthorizationPolicy",
 	}:
-		if err := (&virtualv1alpha1.Circuit{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Circuit")
+		if err := (&iamv1alpha1.AuthorizationPolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AuthorizationPolicy")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "vlan.ibm.kubeform.com",
+		Group:   "iam.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Vlan",
+		Kind:    "AuthorizationPolicyDetach",
 	}:
-		if err := (&vlanv1alpha1.Vlan{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Vlan")
+		if err := (&iamv1alpha1.AuthorizationPolicyDetach{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "AuthorizationPolicyDetach")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "volume.ibm.kubeform.com",
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "CustomRole",
+	}:
+		if err := (&iamv1alpha1.CustomRole{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "CustomRole")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServiceAPIKey",
+	}:
+		if err := (&iamv1alpha1.ServiceAPIKey{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ServiceAPIKey")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServiceID",
+	}:
+		if err := (&iamv1alpha1.ServiceID{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ServiceID")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServicePolicy",
+	}:
+		if err := (&iamv1alpha1.ServicePolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ServicePolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "UserInvite",
+	}:
+		if err := (&iamv1alpha1.UserInvite{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "UserInvite")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "UserPolicy",
+	}:
+		if err := (&iamv1alpha1.UserPolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "UserPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "iam.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "UserSettings",
+	}:
+		if err := (&iamv1alpha1.UserSettings{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "UserSettings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ipsec.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Vpn",
+	}:
+		if err := (&ipsecv1alpha1.Vpn{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Vpn")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHost",
+	}:
+		if err := (&isv1alpha1.DedicatedHost{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DedicatedHost")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHostDiskManagement",
+	}:
+		if err := (&isv1alpha1.DedicatedHostDiskManagement{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DedicatedHostDiskManagement")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "DedicatedHostGroup",
+	}:
+		if err := (&isv1alpha1.DedicatedHostGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "DedicatedHostGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "FloatingIP",
+	}:
+		if err := (&isv1alpha1.FloatingIP{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "FloatingIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "FlowLog",
+	}:
+		if err := (&isv1alpha1.FlowLog{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "FlowLog")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "IkePolicy",
+	}:
+		if err := (&isv1alpha1.IkePolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "IkePolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Image",
+	}:
+		if err := (&isv1alpha1.Image{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Image")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&isv1alpha1.Instance{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceDiskManagement",
+	}:
+		if err := (&isv1alpha1.InstanceDiskManagement{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceDiskManagement")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroup",
+	}:
+		if err := (&isv1alpha1.InstanceGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupManager",
+	}:
+		if err := (&isv1alpha1.InstanceGroupManager{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceGroupManager")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupManagerAction",
+	}:
+		if err := (&isv1alpha1.InstanceGroupManagerAction{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceGroupManagerAction")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupManagerPolicy",
+	}:
+		if err := (&isv1alpha1.InstanceGroupManagerPolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceGroupManagerPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceGroupMembership",
+	}:
+		if err := (&isv1alpha1.InstanceGroupMembership{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceGroupMembership")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceTemplate",
+	}:
+		if err := (&isv1alpha1.InstanceTemplate{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceTemplate")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InstanceVolumeAttachment",
+	}:
+		if err := (&isv1alpha1.InstanceVolumeAttachment{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InstanceVolumeAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "IpsecPolicy",
+	}:
+		if err := (&isv1alpha1.IpsecPolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "IpsecPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Lb",
+	}:
+		if err := (&isv1alpha1.Lb{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Lb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbListener",
+	}:
+		if err := (&isv1alpha1.LbListener{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "LbListener")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbListenerPolicy",
+	}:
+		if err := (&isv1alpha1.LbListenerPolicy{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "LbListenerPolicy")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbListenerPolicyRule",
+	}:
+		if err := (&isv1alpha1.LbListenerPolicyRule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "LbListenerPolicyRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbPool",
+	}:
+		if err := (&isv1alpha1.LbPool{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "LbPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "LbPoolMember",
+	}:
+		if err := (&isv1alpha1.LbPoolMember{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "LbPoolMember")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkACL",
+	}:
+		if err := (&isv1alpha1.NetworkACL{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "NetworkACL")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkACLRule",
+	}:
+		if err := (&isv1alpha1.NetworkACLRule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "NetworkACLRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PublicGateway",
+	}:
+		if err := (&isv1alpha1.PublicGateway{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "PublicGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroup",
+	}:
+		if err := (&isv1alpha1.SecurityGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SecurityGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroupNetworkInterfaceAttachment",
+	}:
+		if err := (&isv1alpha1.SecurityGroupNetworkInterfaceAttachment{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SecurityGroupNetworkInterfaceAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroupRule",
+	}:
+		if err := (&isv1alpha1.SecurityGroupRule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SecurityGroupRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SecurityGroupTarget",
+	}:
+		if err := (&isv1alpha1.SecurityGroupTarget{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SecurityGroupTarget")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Snapshot",
+	}:
+		if err := (&isv1alpha1.Snapshot{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Snapshot")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SshKey",
+	}:
+		if err := (&isv1alpha1.SshKey{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SshKey")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Subnet",
+	}:
+		if err := (&isv1alpha1.Subnet{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Subnet")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SubnetNetworkACLAttachment",
+	}:
+		if err := (&isv1alpha1.SubnetNetworkACLAttachment{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SubnetNetworkACLAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "SubnetReservedIP",
+	}:
+		if err := (&isv1alpha1.SubnetReservedIP{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "SubnetReservedIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VirtualEndpointGateway",
+	}:
+		if err := (&isv1alpha1.VirtualEndpointGateway{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VirtualEndpointGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VirtualEndpointGatewayIP",
+	}:
+		if err := (&isv1alpha1.VirtualEndpointGatewayIP{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VirtualEndpointGatewayIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
 		Version: "v1alpha1",
 		Kind:    "Volume",
 	}:
-		if err := (&volumev1alpha1.Volume{}).SetupWebhookWithManager(mgr); err != nil {
+		if err := (&isv1alpha1.Volume{}).SetupWebhookWithManager(mgr); err != nil {
 			setupLog.Error(err, "unable to create webhook", "webhook", "Volume")
 			return err
 		}
 	case schema.GroupVersionKind{
-		Group:   "volume.ibm.kubeform.com",
+		Group:   "is.ibm.kubeform.com",
 		Version: "v1alpha1",
-		Kind:    "Attachment",
+		Kind:    "Vpc",
 	}:
-		if err := (&volumev1alpha1.Attachment{}).SetupWebhookWithManager(mgr); err != nil {
-			setupLog.Error(err, "unable to create webhook", "webhook", "Attachment")
+		if err := (&isv1alpha1.Vpc{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Vpc")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcAddressPrefix",
+	}:
+		if err := (&isv1alpha1.VpcAddressPrefix{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpcAddressPrefix")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcRoute",
+	}:
+		if err := (&isv1alpha1.VpcRoute{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpcRoute")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcRoutingTable",
+	}:
+		if err := (&isv1alpha1.VpcRoutingTable{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpcRoutingTable")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpcRoutingTableRoute",
+	}:
+		if err := (&isv1alpha1.VpcRoutingTableRoute{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpcRoutingTableRoute")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpnGateway",
+	}:
+		if err := (&isv1alpha1.VpnGateway{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpnGateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "is.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpnGatewayConnection",
+	}:
+		if err := (&isv1alpha1.VpnGatewayConnection{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpnGatewayConnection")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kms.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&kmsv1alpha1.Key{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kms.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "KeyAlias",
+	}:
+		if err := (&kmsv1alpha1.KeyAlias{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "KeyAlias")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kms.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "KeyRings",
+	}:
+		if err := (&kmsv1alpha1.KeyRings{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "KeyRings")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "kp.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&kpv1alpha1.Key{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Lb",
+	}:
+		if err := (&lbv1alpha1.Lb{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Lb")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Service",
+	}:
+		if err := (&lbv1alpha1.Service{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Service")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServiceGroup",
+	}:
+		if err := (&lbv1alpha1.ServiceGroup{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ServiceGroup")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Vpx",
+	}:
+		if err := (&lbv1alpha1.Vpx{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Vpx")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpxHa",
+	}:
+		if err := (&lbv1alpha1.VpxHa{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpxHa")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpxService",
+	}:
+		if err := (&lbv1alpha1.VpxService{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpxService")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lb.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VpxVip",
+	}:
+		if err := (&lbv1alpha1.VpxVip{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VpxVip")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lbaas.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Lbaas",
+	}:
+		if err := (&lbaasv1alpha1.Lbaas{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Lbaas")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lbaas.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "HealthMonitor",
+	}:
+		if err := (&lbaasv1alpha1.HealthMonitor{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "HealthMonitor")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "lbaas.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ServerInstanceAttachment",
+	}:
+		if err := (&lbaasv1alpha1.ServerInstanceAttachment{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ServerInstanceAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "multi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VlanFirewall",
+	}:
+		if err := (&multiv1alpha1.VlanFirewall{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VlanFirewall")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Gateway",
+	}:
+		if err := (&networkv1alpha1.Gateway{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Gateway")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GatewayVLANAssociation",
+	}:
+		if err := (&networkv1alpha1.GatewayVLANAssociation{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "GatewayVLANAssociation")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "InterfaceSgAttachment",
+	}:
+		if err := (&networkv1alpha1.InterfaceSgAttachment{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "InterfaceSgAttachment")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "PublicIP",
+	}:
+		if err := (&networkv1alpha1.PublicIP{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "PublicIP")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Vlan",
+	}:
+		if err := (&networkv1alpha1.Vlan{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Vlan")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "network.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VlanSpanning",
+	}:
+		if err := (&networkv1alpha1.VlanSpanning{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VlanSpanning")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ob.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Logging",
+	}:
+		if err := (&obv1alpha1.Logging{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Logging")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ob.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Monitoring",
+	}:
+		if err := (&obv1alpha1.Monitoring{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Monitoring")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "object.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "StorageAccount",
+	}:
+		if err := (&objectv1alpha1.StorageAccount{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "StorageAccount")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "org.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Org",
+	}:
+		if err := (&orgv1alpha1.Org{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Org")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Capture",
+	}:
+		if err := (&piv1alpha1.Capture{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Capture")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Image",
+	}:
+		if err := (&piv1alpha1.Image{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Image")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&piv1alpha1.Instance{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&piv1alpha1.Key{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Network",
+	}:
+		if err := (&piv1alpha1.Network{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Network")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkPort",
+	}:
+		if err := (&piv1alpha1.NetworkPort{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "NetworkPort")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "NetworkPortAttach",
+	}:
+		if err := (&piv1alpha1.NetworkPortAttach{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "NetworkPortAttach")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Operations",
+	}:
+		if err := (&piv1alpha1.Operations{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Operations")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Snapshot",
+	}:
+		if err := (&piv1alpha1.Snapshot{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Snapshot")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Volume",
+	}:
+		if err := (&piv1alpha1.Volume{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Volume")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pi.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "VolumeAttach",
+	}:
+		if err := (&piv1alpha1.VolumeAttach{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "VolumeAttach")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "pn.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ApplicationChrome",
+	}:
+		if err := (&pnv1alpha1.ApplicationChrome{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ApplicationChrome")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Group",
+	}:
+		if err := (&resourcev1alpha1.Group{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Group")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&resourcev1alpha1.Instance{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&resourcev1alpha1.Key{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "resource.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Tag",
+	}:
+		if err := (&resourcev1alpha1.Tag{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Tag")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Cluster",
+	}:
+		if err := (&satellitev1alpha1.Cluster{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Cluster")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "ClusterWorkerPool",
+	}:
+		if err := (&satellitev1alpha1.ClusterWorkerPool{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "ClusterWorkerPool")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Host",
+	}:
+		if err := (&satellitev1alpha1.Host{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Host")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "satellite.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Location",
+	}:
+		if err := (&satellitev1alpha1.Location{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Location")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "schematics.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Action",
+	}:
+		if err := (&schematicsv1alpha1.Action{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Action")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "schematics.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Job",
+	}:
+		if err := (&schematicsv1alpha1.Job{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Job")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "schematics.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Workspace",
+	}:
+		if err := (&schematicsv1alpha1.Workspace{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Workspace")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "security.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Group",
+	}:
+		if err := (&securityv1alpha1.Group{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Group")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "security.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "GroupRule",
+	}:
+		if err := (&securityv1alpha1.GroupRule{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "GroupRule")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "service.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Instance",
+	}:
+		if err := (&servicev1alpha1.Instance{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Instance")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "service.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Key",
+	}:
+		if err := (&servicev1alpha1.Key{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Key")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "space.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Space",
+	}:
+		if err := (&spacev1alpha1.Space{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Space")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "ssl.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Certificate",
+	}:
+		if err := (&sslv1alpha1.Certificate{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Certificate")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "storage.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Block",
+	}:
+		if err := (&storagev1alpha1.Block{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Block")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "storage.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Evault",
+	}:
+		if err := (&storagev1alpha1.Evault{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Evault")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "storage.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "File",
+	}:
+		if err := (&storagev1alpha1.File{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "File")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "subnet.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Subnet",
+	}:
+		if err := (&subnetv1alpha1.Subnet{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Subnet")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "tg.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Connection",
+	}:
+		if err := (&tgv1alpha1.Connection{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Connection")
+			return err
+		}
+	case schema.GroupVersionKind{
+		Group:   "tg.ibm.kubeform.com",
+		Version: "v1alpha1",
+		Kind:    "Gateway",
+	}:
+		if err := (&tgv1alpha1.Gateway{}).SetupWebhookWithManager(mgr); err != nil {
+			setupLog.Error(err, "unable to create webhook", "webhook", "Gateway")
 			return err
 		}
 
