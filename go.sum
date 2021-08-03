@@ -38,8 +38,8 @@ github.com/IBM-Cloud/power-go-client v1.0.55 h1:XoRU8FWYY8NUKau1nkErkf2FHAUbFEbb
 github.com/IBM-Cloud/power-go-client v1.0.55/go.mod h1:I4r5tCrA8mV5GFqGAJG4/Tn+/JpR+XLnDCLLNVKJxuI=
 github.com/IBM-Cloud/softlayer-go v1.0.3-tf h1:FZF0D11BcYvDCZtWC0ZNEC6PKivuahW/nW9naK7H2PU=
 github.com/IBM-Cloud/softlayer-go v1.0.3-tf/go.mod h1:6HepcfAXROz0Rf63krk5hPZyHT6qyx2MNvYyHof7ik4=
-github.com/IBM-Cloud/terraform-provider-ibm v1.29.0 h1:yno0mltHaZC3QqXRDyHAsDZ1Mq37DMXeQgUJWVAJ9iM=
-github.com/IBM-Cloud/terraform-provider-ibm v1.29.0/go.mod h1:A3CJ6VL/IeoLWAUl8kZm9qHs0jA8V4i9vK/nVN52dTc=
+github.com/IBM-Cloud/terraform-provider-ibm v1.28.1-0.20210729083022-bc68146ed6f3 h1:4rYne7+vgFPukYR2CJESLTBqDUEDQ7EyOHktwHrjcjs=
+github.com/IBM-Cloud/terraform-provider-ibm v1.28.1-0.20210729083022-bc68146ed6f3/go.mod h1:XFQB0RbUS5c85r0Dy+xWn7UGHvDuc0FiORealmWIflg=
 github.com/IBM/apigateway-go-sdk v0.0.0-20210714141226-a5d5d49caaca h1:crniVcf+YcmgF03NmmfonXwSQ73oJF+IohFYBwknMxs=
 github.com/IBM/apigateway-go-sdk v0.0.0-20210714141226-a5d5d49caaca/go.mod h1:IjXrnOcTe92Q4pEBHmui3H/GM1hw5Pd0zXA5cw5/iZU=
 github.com/IBM/appconfiguration-go-admin-sdk v0.1.0 h1:9rdOk32VQFnMqsBB7cTpkZbD7/b0EnwrU3VNN8vuUYc=
@@ -71,8 +71,8 @@ github.com/IBM/ibm-hpcs-tke-sdk v0.0.0-20210723145459-a232c3f3ac91 h1:8ICDvg7YM+
 github.com/IBM/ibm-hpcs-tke-sdk v0.0.0-20210723145459-a232c3f3ac91/go.mod h1:M2JyuyeWHPtgGNeezr6YqVRuaav2MpY8Ha4QrEYvMoI=
 github.com/IBM/keyprotect-go-client v0.7.0 h1:JstSHD14Lp6ihwQseyPuGcs1AjOBjAmcisP0dTBA6A0=
 github.com/IBM/keyprotect-go-client v0.7.0/go.mod h1:SVr2ylV/fhSQPDiUjWirN9fsyWFCNNbt8GIT8hPJVjE=
-github.com/IBM/networking-go-sdk v0.19.0 h1:oXmRZPLnL28OE7bVRJLvKB6vGYjCG58pLWAeTjVBajs=
-github.com/IBM/networking-go-sdk v0.19.0/go.mod h1:nViqUm1Bv+ke8dyOhjQ6e+2U1XeqZX2y4bQbR8Od3Hc=
+github.com/IBM/networking-go-sdk v0.18.0 h1:mlALxXptnoDGviRW59ZQTyCr4PgTdQKp/5ksh2NM6Sk=
+github.com/IBM/networking-go-sdk v0.18.0/go.mod h1:nViqUm1Bv+ke8dyOhjQ6e+2U1XeqZX2y4bQbR8Od3Hc=
 github.com/IBM/platform-services-go-sdk v0.18.16 h1:blYycstPoNtPKtu1uZe240WvzcJENy/Lzx+HMUA8bOo=
 github.com/IBM/platform-services-go-sdk v0.18.16/go.mod h1:awc7TZUeGMlToSeMSaWEz34Knf0lQnuGWumcI4pcuoM=
 github.com/IBM/push-notifications-go-sdk v0.0.0-20210310100607-5790b96c47f5 h1:NPUhkoOCRuv3OFWt19PmwjXGGTKlvmbuPg9fUrBUNe4=
@@ -1402,8 +1402,8 @@ kmodules.xyz/resource-metadata v0.5.7 h1:5xjq5pEp5hZK+jdkY/4wGk/FMtTyvQ9LlErh7lQ
 kmodules.xyz/resource-metadata v0.5.7/go.mod h1:Jdi7zBXRwwFTOR0CxwKxqJhsDVIilhrgNipPjnKLyrs=
 kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5 h1:kpCzsugm64OMYV9ywBIOXbGN7z5ifK+rnGln+f3Gct4=
 kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5/go.mod h1:kfiYdu87pCcrydTGaLXs4QMFx1fLNP5Yov2KxgrkCm0=
-kubeform.dev/provider-ibm-api v0.3.0 h1:4n2248rm2dxqUo4ckIgYt1DhoiA97PHkqN2AR9NgdLU=
-kubeform.dev/provider-ibm-api v0.3.0/go.mod h1:XDqy+VQ5tVA4+d3FTrSKB19RCKGbwvoo3QtAJBzrkns=
+kubeform.dev/provider-ibm-api v0.3.1-0.20210803083243-f4bfc1c8e115 h1:fYgHyzFXbWknuynYED1plsQeBhyGyzXQwFN4cd02H1I=
+kubeform.dev/provider-ibm-api v0.3.1-0.20210803083243-f4bfc1c8e115/go.mod h1:XDqy+VQ5tVA4+d3FTrSKB19RCKGbwvoo3QtAJBzrkns=
 rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.15/go.mod h1:LEScyzhFmoF5pso/YSeBstl57mOzx9xlU9n85RGrDQg=
