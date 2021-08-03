@@ -3,7 +3,7 @@
 
 # provider-ibm-controller
 
-Kubeform controller for [Terraform Ibm Provider](https://github.com/equinix/terraform-provider-metal)
+Kubeform controller for [Terraform IBM Cloud Provider](https://github.com/IBM-Cloud/terraform-provider-ibm)
 
 ## Installation
 
