@@ -94,7 +94,7 @@ github.com/IBM-Cloud/power-go-client/power/client/storage_types
 github.com/IBM-Cloud/power-go-client/power/client/swagger_spec
 github.com/IBM-Cloud/power-go-client/power/models
 github.com/IBM-Cloud/power-go-client/utils
-# github.com/IBM-Cloud/terraform-provider-ibm v1.29.0
+# github.com/IBM-Cloud/terraform-provider-ibm v1.28.1-0.20210729083022-bc68146ed6f3
 ## explicit
 github.com/IBM-Cloud/terraform-provider-ibm/ibm
 github.com/IBM-Cloud/terraform-provider-ibm/ibm/internal/hashcode
@@ -166,7 +166,7 @@ github.com/IBM/ibm-hpcs-tke-sdk/tkesdk
 # github.com/IBM/keyprotect-go-client v0.7.0
 github.com/IBM/keyprotect-go-client
 github.com/IBM/keyprotect-go-client/iam
-# github.com/IBM/networking-go-sdk v0.19.0
+# github.com/IBM/networking-go-sdk v0.18.0
 github.com/IBM/networking-go-sdk/cachingapiv1
 github.com/IBM/networking-go-sdk/cisipapiv1
 github.com/IBM/networking-go-sdk/common
@@ -1452,7 +1452,7 @@ kmodules.xyz/resource-metadata/pkg/graph
 # kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5
 ## explicit
 kubeform.dev/apimachinery/api/v1alpha1
-# kubeform.dev/provider-ibm-api v0.3.0
+# kubeform.dev/provider-ibm-api v0.3.1-0.20210803083243-f4bfc1c8e115
 ## explicit
 kubeform.dev/provider-ibm-api/api/provider
 kubeform.dev/provider-ibm-api/apis/apigateway
