@@ -115,11 +115,6 @@ func resourceIBMContainerWorkerPool() *schema.Resource {
 				},
 			},
 
-			"worker_pool_id": {
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-
 			"labels": {
 				Type:        schema.TypeMap,
 				Optional:    true,
@@ -279,7 +274,6 @@ func resourceIBMContainerWorkerPoolRead(d *schema.ResourceData, meta interface{}
 	d.Set("worker_pool_name", workerPool.Name)
 	d.Set("machine_type", strings.Split(machineType, ".encrypted")[0])
 	d.Set("size_per_zone", workerPool.Size)
-	d.Set("worker_pool_id", workerPoolID)
 	hardware := workerPool.Isolation
 	switch strings.ToLower(hardware) {
 	case "":
