@@ -1402,8 +1402,8 @@ kmodules.xyz/resource-metadata v0.5.7 h1:5xjq5pEp5hZK+jdkY/4wGk/FMtTyvQ9LlErh7lQ
 kmodules.xyz/resource-metadata v0.5.7/go.mod h1:Jdi7zBXRwwFTOR0CxwKxqJhsDVIilhrgNipPjnKLyrs=
 kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5 h1:kpCzsugm64OMYV9ywBIOXbGN7z5ifK+rnGln+f3Gct4=
 kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5/go.mod h1:kfiYdu87pCcrydTGaLXs4QMFx1fLNP5Yov2KxgrkCm0=
-kubeform.dev/provider-ibm-api v0.3.1-0.20210803083243-f4bfc1c8e115 h1:fYgHyzFXbWknuynYED1plsQeBhyGyzXQwFN4cd02H1I=
-kubeform.dev/provider-ibm-api v0.3.1-0.20210803083243-f4bfc1c8e115/go.mod h1:XDqy+VQ5tVA4+d3FTrSKB19RCKGbwvoo3QtAJBzrkns=
+kubeform.dev/provider-ibm-api v0.3.1-0.20210804230511-26e583ac208f h1:0Rtiam0coDf5DeUTnmtk9UnVCFXBXoEa5ya3s3bgD8U=
+kubeform.dev/provider-ibm-api v0.3.1-0.20210804230511-26e583ac208f/go.mod h1:XDqy+VQ5tVA4+d3FTrSKB19RCKGbwvoo3QtAJBzrkns=
 rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.15/go.mod h1:LEScyzhFmoF5pso/YSeBstl57mOzx9xlU9n85RGrDQg=
