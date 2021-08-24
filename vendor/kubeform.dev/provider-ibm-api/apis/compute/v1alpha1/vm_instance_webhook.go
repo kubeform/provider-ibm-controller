@@ -20,9 +20,12 @@ package v1alpha1
 
 import (
 	"fmt"
+	"strings"
 
 	base "kubeform.dev/apimachinery/api/v1alpha1"
+	"kubeform.dev/provider-ibm-api/util"
 
+	jsoniter "github.com/json-iterator/go"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
@@ -38,6 +41,38 @@ func (r *VmInstance) SetupWebhookWithManager(mgr ctrl.Manager) error {
 
 var _ webhook.Validator = &VmInstance{}
 
+var vminstanceForceNewList = map[string]bool{
+	"/bulk_vms/*/domain":          true,
+	"/bulk_vms/*/hostname":        true,
+	"/datacenter":                 true,
+	"/dedicated_acct_host_only":   true,
+	"/dedicated_host_id":          true,
+	"/dedicated_host_name":        true,
+	"/evault":                     true,
+	"/hourly_billing":             true,
+	"/image_id":                   true,
+	"/ipv6_enabled":               true,
+	"/ipv6_static_enabled":        true,
+	"/local_disk":                 true,
+	"/os_reference_code":          true,
+	"/placement_group_id":         true,
+	"/placement_group_name":       true,
+	"/post_install_script_uri":    true,
+	"/private_network_only":       true,
+	"/private_security_group_ids": true,
+	"/private_subnet":             true,
+	"/private_vlan_id":            true,
+	"/public_bandwidth_limited":   true,
+	"/public_bandwidth_unlimited": true,
+	"/public_security_group_ids":  true,
+	"/public_subnet":              true,
+	"/public_vlan_id":             true,
+	"/quote_id":                   true,
+	"/secondary_ip_count":         true,
+	"/transient":                  true,
+	"/user_metadata":              true,
+}
+
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *VmInstance) ValidateCreate() error {
 	return nil
@@ -45,6 +80,53 @@ func (r *VmInstance) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *VmInstance) ValidateUpdate(old runtime.Object) error {
+	if r.Spec.Resource.ID == "" {
+		return nil
+	}
+	newObj := r.Spec.Resource
+	res := old.(*VmInstance)
+	oldObj := res.Spec.Resource
+
+	jsnitr := jsoniter.Config{
+		EscapeHTML:             true,
+		SortMapKeys:            true,
+		TagKey:                 "tf",
+		ValidateJsonRawMessage: true,
+		TypeEncoders:           GetEncoder(),
+		TypeDecoders:           GetDecoder(),
+	}.Froze()
+
+	byteNew, err := jsnitr.Marshal(newObj)
+	if err != nil {
+		return err
+	}
+	tempNew := make(map[string]interface{})
+	err = jsnitr.Unmarshal(byteNew, &tempNew)
+	if err != nil {
+		return err
+	}
+
+	byteOld, err := jsnitr.Marshal(oldObj)
+	if err != nil {
+		return err
+	}
+	tempOld := make(map[string]interface{})
+	err = jsnitr.Unmarshal(byteOld, &tempOld)
+	if err != nil {
+		return err
+	}
+
+	for key := range vminstanceForceNewList {
+		keySplit := strings.Split(key, "/*")
+		length := len(keySplit)
+		checkIfAnyDif := false
+		util.CheckIfAnyDifference("", keySplit, 0, length, &checkIfAnyDif, tempOld, tempOld, tempNew)
+		util.CheckIfAnyDifference("", keySplit, 0, length, &checkIfAnyDif, tempNew, tempOld, tempNew)
+
+		if checkIfAnyDif && r.Spec.UpdatePolicy == base.UpdatePolicyDoNotDestroy {
+			return fmt.Errorf(`vminstance "%v/%v" immutable field can't be updated. To update, change spec.updatePolicy to Destroy`, r.Namespace, r.Name)
+		}
+	}
 	return nil
 }
 
