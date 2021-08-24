@@ -338,9 +338,6 @@ github.com/form3tech-oss/jwt-go
 github.com/fsnotify/fsnotify
 # github.com/ghodss/yaml v1.0.0
 github.com/ghodss/yaml
-# github.com/go-errors/errors v1.0.1
-## explicit
-github.com/go-errors/errors
 # github.com/go-logr/logr v0.4.0
 ## explicit
 github.com/go-logr/logr
@@ -1457,10 +1454,11 @@ kmodules.xyz/resource-metadata/hub
 kmodules.xyz/resource-metadata/hub/resourceclasses
 kmodules.xyz/resource-metadata/hub/resourcedescriptors
 kmodules.xyz/resource-metadata/pkg/graph
-# kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5
+# kubeform.dev/apimachinery v0.0.0-20210824104859-ba5604d5a1cc
 ## explicit
 kubeform.dev/apimachinery/api/v1alpha1
-# kubeform.dev/provider-ibm-api v0.3.1-0.20210824080415-2073355776b9
+kubeform.dev/apimachinery/pkg/util
+# kubeform.dev/provider-ibm-api v0.3.1-0.20210824194347-6f453a98b169
 ## explicit
 kubeform.dev/provider-ibm-api/api/provider
 kubeform.dev/provider-ibm-api/apis/apigateway
@@ -1550,7 +1548,6 @@ kubeform.dev/provider-ibm-api/apis/subnet/v1alpha1
 kubeform.dev/provider-ibm-api/apis/tg
 kubeform.dev/provider-ibm-api/apis/tg/v1alpha1
 kubeform.dev/provider-ibm-api/client/clientset/versioned/scheme
-kubeform.dev/provider-ibm-api/util
 # sigs.k8s.io/cli-utils v0.25.0
 ## explicit
 sigs.k8s.io/cli-utils/pkg/kstatus/status

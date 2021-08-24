@@ -290,7 +290,6 @@ github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeME
 github.com/gliderlabs/ssh v0.2.2/go.mod h1:U7qILu1NlMHj9FlMhZLlkCdDnU1DBEAqr0aevW3Awn0=
 github.com/globalsign/mgo v0.0.0-20180905125535-1ca0a4f7cbcb/go.mod h1:xkRDCp4j0OGD1HRkm4kmhM+pmpv3AKq5SU7GMg4oO/Q=
 github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8/go.mod h1:xkRDCp4j0OGD1HRkm4kmhM+pmpv3AKq5SU7GMg4oO/Q=
-github.com/go-errors/errors v1.0.1 h1:LUHzmkK3GUKUrL/1gfBUxAHzcev3apQlezX/+O7ma6w=
 github.com/go-errors/errors v1.0.1/go.mod h1:f4zRHt4oKfwPJE5k8C9vpYG+aDHdBFUsgrm6/TyX73Q=
 github.com/go-git/gcfg v1.5.0 h1:Q5ViNfGF8zFgyJWPqYwA7qGFoMTEiBmdlkcfRmpIMa4=
 github.com/go-git/gcfg v1.5.0/go.mod h1:5m20vg6GwYabIxaOonVkTdrILxQMpEShl1xiMF4ua+E=
@@ -480,7 +479,6 @@ github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/google/go-cmp v0.5.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.2/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.4/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
-github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-cmp v0.5.6 h1:BKbKCqvP6I+rmFHt06ZmyQtvB8xAkWdhFyr0ZUNZcxQ=
 github.com/google/go-cmp v0.5.6/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/google/go-querystring v1.0.0/go.mod h1:odCYkC5MyYFN7vkCjXpyrEuKhc/BUO6wN/zVPAxq5ck=
@@ -1411,10 +1409,10 @@ kmodules.xyz/monitoring-agent-api v0.0.0-20210618005119-a8c212adc2bf/go.mod h1:Q
 kmodules.xyz/offshoot-api v0.0.0-20210618005544-5217a24765da/go.mod h1:3LECbAL3FgbyK80NP3V3Pmiuo/a3hFWg/PR6SPFhTns=
 kmodules.xyz/resource-metadata v0.5.7 h1:5xjq5pEp5hZK+jdkY/4wGk/FMtTyvQ9LlErh7lQC1m4=
 kmodules.xyz/resource-metadata v0.5.7/go.mod h1:Jdi7zBXRwwFTOR0CxwKxqJhsDVIilhrgNipPjnKLyrs=
-kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5 h1:kpCzsugm64OMYV9ywBIOXbGN7z5ifK+rnGln+f3Gct4=
-kubeform.dev/apimachinery v0.0.0-20210629153539-7bcd34a30eb5/go.mod h1:kfiYdu87pCcrydTGaLXs4QMFx1fLNP5Yov2KxgrkCm0=
-kubeform.dev/provider-ibm-api v0.3.1-0.20210824080415-2073355776b9 h1:RGaa+dSo+GIKoTBOuIAd1J09H6ct+iTbASItX8oB5Jo=
-kubeform.dev/provider-ibm-api v0.3.1-0.20210824080415-2073355776b9/go.mod h1:Aa9ECwFc9visSzDjw3svPOSx0QO2aptInQBeSOqdc1U=
+kubeform.dev/apimachinery v0.0.0-20210824104859-ba5604d5a1cc h1:YfOjHKKQWrKvmkqtLNoN6mNud5Mw7lkGb7SmLS216jc=
+kubeform.dev/apimachinery v0.0.0-20210824104859-ba5604d5a1cc/go.mod h1:v2f/23RmX0K45i0qdPyWaOvzElhXQPMW84JDFEH5kw8=
+kubeform.dev/provider-ibm-api v0.3.1-0.20210824194347-6f453a98b169 h1:Ltgj7LownEDBOCkwRlV+PBV9qsDR6hP18xD6lVxRyqE=
+kubeform.dev/provider-ibm-api v0.3.1-0.20210824194347-6f453a98b169/go.mod h1:jVTJ7YwM8LTJRDuRnoMcBOp19X0tGevths8KFVv/M+0=
 rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
 sigs.k8s.io/apiserver-network-proxy/konnectivity-client v0.0.15/go.mod h1:LEScyzhFmoF5pso/YSeBstl57mOzx9xlU9n85RGrDQg=
