@@ -24,7 +24,6 @@ import (
 	"github.com/go-logr/logr"
 	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	auditlib "go.bytebuilders.dev/audit/lib"
-	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -45,11 +44,10 @@ type ConfigEnvironmentReconciler struct {
 	Log    logr.Logger
 	Scheme *runtime.Scheme
 
-	Gvk              schema.GroupVersionKind // GVK of the Resource
-	Provider         *tfschema.Provider      // returns a *schema.Provider from the provider package
-	Resource         *tfschema.Resource      // returns *schema.Resource
-	TypeName         string                  // resource type
-	WatchOnlyDefault bool
+	Gvk      schema.GroupVersionKind // GVK of the Resource
+	Provider *tfschema.Provider      // returns a *schema.Provider from the provider package
+	Resource *tfschema.Resource      // returns *schema.Resource
+	TypeName string                  // resource type
 }
 
 // +kubebuilder:rbac:groups=app.ibm.kubeform.com,resources=configenvironments,verbs=get;list;watch;create;update;patch;delete
@@ -58,10 +56,6 @@ type ConfigEnvironmentReconciler struct {
 func (r *ConfigEnvironmentReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := r.Log.WithValues("configenvironment", req.NamespacedName)
 
-	if r.WatchOnlyDefault && req.Namespace != v1.NamespaceDefault {
-		log.Info("Only default namespace is supported for Kubeform Community, Please upgrade to Kubeform Enterprise to use any namespace.")
-		return ctrl.Result{}, nil
-	}
 	var unstructuredObj unstructured.Unstructured
 	unstructuredObj.SetGroupVersionKind(r.Gvk)
 
@@ -81,7 +75,7 @@ func (r *ConfigEnvironmentReconciler) Reconcile(ctx context.Context, req ctrl.Re
 	return ctrl.Result{}, err
 }
 
-func (r *ConfigEnvironmentReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager, auditor *auditlib.EventPublisher) error {
+func (r *ConfigEnvironmentReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager, auditor *auditlib.EventPublisher, restrictToNamespace string) error {
 	if auditor != nil {
 		if err := auditor.SetupWithManager(ctx, mgr, &appv1alpha1.ConfigEnvironment{}); err != nil {
 			klog.Error(err, "unable to set up auditor", appv1alpha1.ConfigEnvironment{}.APIVersion, appv1alpha1.ConfigEnvironment{}.Kind)
@@ -99,6 +93,12 @@ func (r *ConfigEnvironmentReconciler) SetupWithManager(ctx context.Context, mgr 
 				return (e.ObjectNew.(metav1.Object)).GetDeletionTimestamp() != nil || !meta_util.MustAlreadyReconciled(e.ObjectNew)
 			},
 		}).
-		Owns(&v1.Secret{}).
+		WithEventFilter(predicate.NewPredicateFuncs(func(e client.Object) bool {
+			if restrictToNamespace != "" && e.GetNamespace() != restrictToNamespace {
+				klog.Infof("Only %s namespace is supported for Kubeform Community. Please upgrade to Kubeform Enterprise to use any namespace.", restrictToNamespace)
+				return false
+			}
+			return true
+		})).
 		Complete(r)
 }

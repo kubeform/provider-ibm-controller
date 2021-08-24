@@ -20,9 +20,12 @@ package v1alpha1
 
 import (
 	"fmt"
+	"strings"
 
 	base "kubeform.dev/apimachinery/api/v1alpha1"
+	"kubeform.dev/provider-ibm-api/util"
 
+	jsoniter "github.com/json-iterator/go"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
@@ -38,6 +41,44 @@ func (r *BareMetal) SetupWebhookWithManager(mgr ctrl.Manager) error {
 
 var _ webhook.Validator = &BareMetal{}
 
+var baremetalForceNewList = map[string]bool{
+	"/datacenter":                true,
+	"/disk_key_names":            true,
+	"/domain":                    true,
+	"/extended_hardware_testing": true,
+	"/fixed_config_preset":       true,
+	"/gpu_key_name":              true,
+	"/gpu_secondary_key_name":    true,
+	"/hostname":                  true,
+	"/hourly_billing":            true,
+	"/image_template_id":         true,
+	"/ipv6_enabled":              true,
+	"/ipv6_static_enabled":       true,
+	"/memory":                    true,
+	"/network_speed":             true,
+	"/os_key_name":               true,
+	"/os_reference_code":         true,
+	"/package_key_name":          true,
+	"/post_install_script_uri":   true,
+	"/private_network_only":      true,
+	"/private_subnet":            true,
+	"/private_vlan_id":           true,
+	"/process_key_name":          true,
+	"/public_bandwidth":          true,
+	"/public_subnet":             true,
+	"/public_vlan_id":            true,
+	"/quote_id":                  true,
+	"/redundant_network":         true,
+	"/redundant_power_supply":    true,
+	"/restricted_network":        true,
+	"/secondary_ip_count":        true,
+	"/software_guard_extensions": true,
+	"/ssh_key_ids":               true,
+	"/tcp_monitoring":            true,
+	"/unbonded_network":          true,
+	"/user_metadata":             true,
+}
+
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *BareMetal) ValidateCreate() error {
 	return nil
@@ -45,6 +86,53 @@ func (r *BareMetal) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *BareMetal) ValidateUpdate(old runtime.Object) error {
+	if r.Spec.Resource.ID == "" {
+		return nil
+	}
+	newObj := r.Spec.Resource
+	res := old.(*BareMetal)
+	oldObj := res.Spec.Resource
+
+	jsnitr := jsoniter.Config{
+		EscapeHTML:             true,
+		SortMapKeys:            true,
+		TagKey:                 "tf",
+		ValidateJsonRawMessage: true,
+		TypeEncoders:           GetEncoder(),
+		TypeDecoders:           GetDecoder(),
+	}.Froze()
+
+	byteNew, err := jsnitr.Marshal(newObj)
+	if err != nil {
+		return err
+	}
+	tempNew := make(map[string]interface{})
+	err = jsnitr.Unmarshal(byteNew, &tempNew)
+	if err != nil {
+		return err
+	}
+
+	byteOld, err := jsnitr.Marshal(oldObj)
+	if err != nil {
+		return err
+	}
+	tempOld := make(map[string]interface{})
+	err = jsnitr.Unmarshal(byteOld, &tempOld)
+	if err != nil {
+		return err
+	}
+
+	for key := range baremetalForceNewList {
+		keySplit := strings.Split(key, "/*")
+		length := len(keySplit)
+		checkIfAnyDif := false
+		util.CheckIfAnyDifference("", keySplit, 0, length, &checkIfAnyDif, tempOld, tempOld, tempNew)
+		util.CheckIfAnyDifference("", keySplit, 0, length, &checkIfAnyDif, tempNew, tempOld, tempNew)
+
+		if checkIfAnyDif && r.Spec.UpdatePolicy == base.UpdatePolicyDoNotDestroy {
+			return fmt.Errorf(`baremetal "%v/%v" immutable field can't be updated. To update, change spec.updatePolicy to Destroy`, r.Namespace, r.Name)
+		}
+	}
 	return nil
 }
 

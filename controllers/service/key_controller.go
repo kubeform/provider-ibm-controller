@@ -21,6 +21,7 @@ package service
 import (
 	"context"
 
+	"github.com/go-errors/errors"
 	"github.com/go-logr/logr"
 	tfschema "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	auditlib "go.bytebuilders.dev/audit/lib"
@@ -36,7 +37,9 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/event"
+	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/predicate"
+	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
 // KeyReconciler reconciles a Key object
@@ -45,11 +48,10 @@ type KeyReconciler struct {
 	Log    logr.Logger
 	Scheme *runtime.Scheme
 
-	Gvk              schema.GroupVersionKind // GVK of the Resource
-	Provider         *tfschema.Provider      // returns a *schema.Provider from the provider package
-	Resource         *tfschema.Resource      // returns *schema.Resource
-	TypeName         string                  // resource type
-	WatchOnlyDefault bool
+	Gvk      schema.GroupVersionKind // GVK of the Resource
+	Provider *tfschema.Provider      // returns a *schema.Provider from the provider package
+	Resource *tfschema.Resource      // returns *schema.Resource
+	TypeName string                  // resource type
 }
 
 // +kubebuilder:rbac:groups=service.ibm.kubeform.com,resources=keys,verbs=get;list;watch;create;update;patch;delete
@@ -58,10 +60,6 @@ type KeyReconciler struct {
 func (r *KeyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	log := r.Log.WithValues("key", req.NamespacedName)
 
-	if r.WatchOnlyDefault && req.Namespace != v1.NamespaceDefault {
-		log.Info("Only default namespace is supported for Kubeform Community, Please upgrade to Kubeform Enterprise to use any namespace.")
-		return ctrl.Result{}, nil
-	}
 	var unstructuredObj unstructured.Unstructured
 	unstructuredObj.SetGroupVersionKind(r.Gvk)
 
@@ -81,7 +79,7 @@ func (r *KeyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.R
 	return ctrl.Result{}, err
 }
 
-func (r *KeyReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager, auditor *auditlib.EventPublisher) error {
+func (r *KeyReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager, auditor *auditlib.EventPublisher, restrictToNamespace string) error {
 	if auditor != nil {
 		if err := auditor.SetupWithManager(ctx, mgr, &servicev1alpha1.Key{}); err != nil {
 			klog.Error(err, "unable to set up auditor", servicev1alpha1.Key{}.APIVersion, servicev1alpha1.Key{}.Kind)
@@ -99,6 +97,46 @@ func (r *KeyReconciler) SetupWithManager(ctx context.Context, mgr ctrl.Manager, 
 				return (e.ObjectNew.(metav1.Object)).GetDeletionTimestamp() != nil || !meta_util.MustAlreadyReconciled(e.ObjectNew)
 			},
 		}).
-		Owns(&v1.Secret{}).
+		WithEventFilter(predicate.NewPredicateFuncs(func(e client.Object) bool {
+			if restrictToNamespace != "" && e.GetNamespace() != restrictToNamespace {
+				klog.Infof("Only %s namespace is supported for Kubeform Community. Please upgrade to Kubeform Enterprise to use any namespace.", restrictToNamespace)
+				return false
+			}
+			return true
+		})).
+		Watches(
+			&source.Kind{Type: &v1.Secret{}},
+			handler.EnqueueRequestsFromMapFunc(r.SensitiveSecretWatch(ctx)),
+		).
 		Complete(r)
+}
+
+func (r *KeyReconciler) SensitiveSecretWatch(ctx context.Context) handler.MapFunc {
+	log := ctrl.LoggerFrom(ctx)
+	return func(o client.Object) []ctrl.Request {
+		result := []ctrl.Request{}
+
+		sensSec, ok := o.(*v1.Secret)
+		if !ok {
+			log.Error(errors.Errorf("expected a Secret but go a %T", o), "failed to get secret for Key")
+			return nil
+		}
+
+		secName := sensSec.Name
+		secNamespace := sensSec.Namespace
+
+		resourceList := &servicev1alpha1.KeyList{}
+		if err := r.List(ctx, resourceList, client.InNamespace(secNamespace)); err != nil {
+			log.Error(err, "failed to list Key")
+			return nil
+		}
+
+		for _, res := range resourceList.Items {
+			if res.Spec.SecretRef.Name == secName {
+				name := client.ObjectKey{Namespace: res.Namespace, Name: res.Name}
+				result = append(result, ctrl.Request{NamespacedName: name})
+			}
+		}
+		return result
+	}
 }
