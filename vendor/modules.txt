@@ -1638,7 +1638,7 @@ kmodules.xyz/resource-metrics/api
 ## explicit
 kubeform.dev/apimachinery/api/v1alpha1
 kubeform.dev/apimachinery/pkg/util
-# kubeform.dev/provider-ibm-api v0.3.1-0.20211020090231-82bfd5d04280
+# kubeform.dev/provider-ibm-api v0.4.0
 ## explicit
 kubeform.dev/provider-ibm-api/api/provider
 kubeform.dev/provider-ibm-api/apis/apigateway
