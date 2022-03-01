@@ -72,1730 +72,1728 @@ type Data struct {
 	ResourceType string
 }
 
-var (
-	allJsonIt = map[schema.GroupVersionResource]Data{
-		{
-			Group:    "apigateway.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "endpoints",
-		}: {
-			JsonIt:       controllers.GetJSONItr(apigatewayv1alpha1.GetEncoder(), apigatewayv1alpha1.GetDecoder()),
-			ResourceType: "ibm_api_gateway_endpoint",
-		},
-		{
-			Group:    "apigateway.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "endpointsubscriptions",
-		}: {
-			JsonIt:       controllers.GetJSONItr(apigatewayv1alpha1.GetEncoder(), apigatewayv1alpha1.GetDecoder()),
-			ResourceType: "ibm_api_gateway_endpoint_subscription",
-		},
-		{
-			Group:    "app.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "apps",
-		}: {
-			JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
-			ResourceType: "ibm_app",
-		},
-		{
-			Group:    "app.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "configenvironments",
-		}: {
-			JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
-			ResourceType: "ibm_app_config_environment",
-		},
-		{
-			Group:    "app.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "configfeatures",
-		}: {
-			JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
-			ResourceType: "ibm_app_config_feature",
-		},
-		{
-			Group:    "app.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "domainprivates",
-		}: {
-			JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
-			ResourceType: "ibm_app_domain_private",
-		},
-		{
-			Group:    "app.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "domainshareds",
-		}: {
-			JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
-			ResourceType: "ibm_app_domain_shared",
-		},
-		{
-			Group:    "app.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "routes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
-			ResourceType: "ibm_app_route",
-		},
-		{
-			Group:    "cdn.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "cdns",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cdnv1alpha1.GetEncoder(), cdnv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cdn",
-		},
-		{
-			Group:    "certificate.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "managerimports",
-		}: {
-			JsonIt:       controllers.GetJSONItr(certificatev1alpha1.GetEncoder(), certificatev1alpha1.GetDecoder()),
-			ResourceType: "ibm_certificate_manager_import",
-		},
-		{
-			Group:    "certificate.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "managerorders",
-		}: {
-			JsonIt:       controllers.GetJSONItr(certificatev1alpha1.GetEncoder(), certificatev1alpha1.GetDecoder()),
-			ResourceType: "ibm_certificate_manager_order",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "cis",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "cachesettings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_cache_settings",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "certificateorders",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_certificate_order",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "certificateuploads",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_certificate_upload",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "custompages",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_custom_page",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "dnsrecords",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_dns_record",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "dnsrecordsimports",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_dns_records_import",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "domains",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_domain",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "domainsettings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_domain_settings",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "edgefunctionsactions",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_edge_functions_action",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "edgefunctionstriggers",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_edge_functions_trigger",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "filters",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_filter",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "firewalls",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_firewall",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "globalloadbalancers",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_global_load_balancer",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "healthchecks",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_healthcheck",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "originpools",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_origin_pool",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "pagerules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_page_rule",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "rangeapps",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_range_app",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "ratelimits",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_rate_limit",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "routings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_routing",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "tlssettings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_tls_settings",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "wafgroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_waf_group",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "wafpackages",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_waf_package",
-		},
-		{
-			Group:    "cis.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "wafrules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cis_waf_rule",
-		},
-		{
-			Group:    "cm.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "catalogs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cm_catalog",
-		},
-		{
-			Group:    "cm.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "offerings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cm_offering",
-		},
-		{
-			Group:    "cm.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "offeringinstances",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cm_offering_instance",
-		},
-		{
-			Group:    "cm.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "versions",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cm_version",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "autoscalegroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_autoscale_group",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "autoscalepolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_autoscale_policy",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "baremetals",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_bare_metal",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "dedicatedhosts",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_dedicated_host",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "monitors",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_monitor",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "placementgroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_placement_group",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "provisioninghooks",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_provisioning_hook",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "sshkeys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_ssh_key",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "sslcertificates",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_ssl_certificate",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "users",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_user",
-		},
-		{
-			Group:    "compute.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vminstances",
-		}: {
-			JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
-			ResourceType: "ibm_compute_vm_instance",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "addons",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_addons",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "albs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_alb",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "albcerts",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_alb_cert",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "apikeyresets",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_api_key_reset",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "bindservices",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_bind_service",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "clusters",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_cluster",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "clusterfeatures",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_cluster_feature",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcalbs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_vpc_alb",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcclusters",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_vpc_cluster",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcworkerpools",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_vpc_worker_pool",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "workerpools",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_worker_pool",
-		},
-		{
-			Group:    "container.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "workerpoolzoneattachments",
-		}: {
-			JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
-			ResourceType: "ibm_container_worker_pool_zone_attachment",
-		},
-		{
-			Group:    "cos.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "buckets",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cosv1alpha1.GetEncoder(), cosv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cos_bucket",
-		},
-		{
-			Group:    "cos.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "bucketobjects",
-		}: {
-			JsonIt:       controllers.GetJSONItr(cosv1alpha1.GetEncoder(), cosv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cos_bucket_object",
-		},
-		{
-			Group:    "cr.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "namespaces",
-		}: {
-			JsonIt:       controllers.GetJSONItr(crv1alpha1.GetEncoder(), crv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cr_namespace",
-		},
-		{
-			Group:    "cr.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "retentionpolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(crv1alpha1.GetEncoder(), crv1alpha1.GetDecoder()),
-			ResourceType: "ibm_cr_retention_policy",
-		},
-		{
-			Group:    "database.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "databases",
-		}: {
-			JsonIt:       controllers.GetJSONItr(databasev1alpha1.GetEncoder(), databasev1alpha1.GetDecoder()),
-			ResourceType: "ibm_database",
-		},
-		{
-			Group:    "dl.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "gateways",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dlv1alpha1.GetEncoder(), dlv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dl_gateway",
-		},
-		{
-			Group:    "dl.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "providergateways",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dlv1alpha1.GetEncoder(), dlv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dl_provider_gateway",
-		},
-		{
-			Group:    "dl.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "virtualconnections",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dlv1alpha1.GetEncoder(), dlv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dl_virtual_connection",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "domains",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_domain",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "domainregistrationnameservers",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_domain_registration_nameservers",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "glbs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_glb",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "glbmonitors",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_glb_monitor",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "glbpools",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_glb_pool",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "permittednetworks",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_permitted_network",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "records",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_record",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "resourcerecords",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_resource_record",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "reverserecords",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_reverse_record",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "secondaries",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_secondary",
-		},
-		{
-			Group:    "dns.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "zones",
-		}: {
-			JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_dns_zone",
-		},
-		{
-			Group:    "enterprise.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "enterprises",
-		}: {
-			JsonIt:       controllers.GetJSONItr(enterprisev1alpha1.GetEncoder(), enterprisev1alpha1.GetDecoder()),
-			ResourceType: "ibm_enterprise",
-		},
-		{
-			Group:    "enterprise.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "accounts",
-		}: {
-			JsonIt:       controllers.GetJSONItr(enterprisev1alpha1.GetEncoder(), enterprisev1alpha1.GetDecoder()),
-			ResourceType: "ibm_enterprise_account",
-		},
-		{
-			Group:    "enterprise.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "accountgroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(enterprisev1alpha1.GetEncoder(), enterprisev1alpha1.GetDecoder()),
-			ResourceType: "ibm_enterprise_account_group",
-		},
-		{
-			Group:    "event.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "streamstopics",
-		}: {
-			JsonIt:       controllers.GetJSONItr(eventv1alpha1.GetEncoder(), eventv1alpha1.GetDecoder()),
-			ResourceType: "ibm_event_streams_topic",
-		},
-		{
-			Group:    "firewall.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "firewalls",
-		}: {
-			JsonIt:       controllers.GetJSONItr(firewallv1alpha1.GetEncoder(), firewallv1alpha1.GetDecoder()),
-			ResourceType: "ibm_firewall",
-		},
-		{
-			Group:    "firewall.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "policies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(firewallv1alpha1.GetEncoder(), firewallv1alpha1.GetDecoder()),
-			ResourceType: "ibm_firewall_policy",
-		},
-		{
-			Group:    "function.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "actions",
-		}: {
-			JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
-			ResourceType: "ibm_function_action",
-		},
-		{
-			Group:    "function.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "namespaces",
-		}: {
-			JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
-			ResourceType: "ibm_function_namespace",
-		},
-		{
-			Group:    "function.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "packages",
-		}: {
-			JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
-			ResourceType: "ibm_function_package",
-		},
-		{
-			Group:    "function.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "rules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
-			ResourceType: "ibm_function_rule",
-		},
-		{
-			Group:    "function.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "triggers",
-		}: {
-			JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
-			ResourceType: "ibm_function_trigger",
-		},
-		{
-			Group:    "hardware.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "firewallshareds",
-		}: {
-			JsonIt:       controllers.GetJSONItr(hardwarev1alpha1.GetEncoder(), hardwarev1alpha1.GetDecoder()),
-			ResourceType: "ibm_hardware_firewall_shared",
-		},
-		{
-			Group:    "hpcs.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "hpcs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(hpcsv1alpha1.GetEncoder(), hpcsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_hpcs",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "accessgroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_access_group",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "accessgroupdynamicrules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_access_group_dynamic_rule",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "accessgroupmembers",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_access_group_members",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "accessgrouppolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_access_group_policy",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "accountsettings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_account_settings",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "apikeys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_api_key",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "authorizationpolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_authorization_policy",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "authorizationpolicydetaches",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_authorization_policy_detach",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "customroles",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_custom_role",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "serviceapikeys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_service_api_key",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "serviceids",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_service_id",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "servicepolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_service_policy",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "userinvites",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_user_invite",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "userpolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_user_policy",
-		},
-		{
-			Group:    "iam.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "usersettings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
-			ResourceType: "ibm_iam_user_settings",
-		},
-		{
-			Group:    "ipsec.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpns",
-		}: {
-			JsonIt:       controllers.GetJSONItr(ipsecv1alpha1.GetEncoder(), ipsecv1alpha1.GetDecoder()),
-			ResourceType: "ibm_ipsec_vpn",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "dedicatedhosts",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_dedicated_host",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "dedicatedhostdiskmanagements",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_dedicated_host_disk_management",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "dedicatedhostgroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_dedicated_host_group",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "floatingips",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_floating_ip",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "flowlogs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_flow_log",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "ikepolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_ike_policy",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "images",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_image",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instances",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancediskmanagements",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_disk_management",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancegroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_group",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancegroupmanagers",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_group_manager",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancegroupmanageractions",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_group_manager_action",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancegroupmanagerpolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_group_manager_policy",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancegroupmemberships",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_group_membership",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancetemplates",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_template",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instancevolumeattachments",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_instance_volume_attachment",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "ipsecpolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_ipsec_policy",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lbs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_lb",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lblisteners",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_lb_listener",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lblistenerpolicies",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_lb_listener_policy",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lblistenerpolicyrules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_lb_listener_policy_rule",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lbpools",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_lb_pool",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lbpoolmembers",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_lb_pool_member",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "networkacls",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_network_acl",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "networkaclrules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_network_acl_rule",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "publicgateways",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_public_gateway",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "securitygroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_security_group",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "securitygroupnetworkinterfaceattachments",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_security_group_network_interface_attachment",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "securitygrouprules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_security_group_rule",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "securitygrouptargets",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_security_group_target",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "snapshots",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_snapshot",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "sshkeys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_ssh_key",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "subnets",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_subnet",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "subnetnetworkaclattachments",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_subnet_network_acl_attachment",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "subnetreservedips",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_subnet_reserved_ip",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "virtualendpointgateways",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_virtual_endpoint_gateway",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "virtualendpointgatewayips",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_virtual_endpoint_gateway_ip",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "volumes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_volume",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_vpc",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcaddressprefixes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_vpc_address_prefix",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcroutes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_vpc_route",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcroutingtables",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_vpc_routing_table",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpcroutingtableroutes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_vpc_routing_table_route",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpngateways",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_vpn_gateway",
-		},
-		{
-			Group:    "is.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpngatewayconnections",
-		}: {
-			JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
-			ResourceType: "ibm_is_vpn_gateway_connection",
-		},
-		{
-			Group:    "kms.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "keys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(kmsv1alpha1.GetEncoder(), kmsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_kms_key",
-		},
-		{
-			Group:    "kms.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "keyalias",
-		}: {
-			JsonIt:       controllers.GetJSONItr(kmsv1alpha1.GetEncoder(), kmsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_kms_key_alias",
-		},
-		{
-			Group:    "kms.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "keyrings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(kmsv1alpha1.GetEncoder(), kmsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_kms_key_rings",
-		},
-		{
-			Group:    "kp.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "keys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(kpv1alpha1.GetEncoder(), kpv1alpha1.GetDecoder()),
-			ResourceType: "ibm_kp_key",
-		},
-		{
-			Group:    "lb.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lbs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lb",
-		},
-		{
-			Group:    "lb.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "services",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lb_service",
-		},
-		{
-			Group:    "lb.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "servicegroups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lb_service_group",
-		},
-		{
-			Group:    "lb.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpxes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lb_vpx",
-		},
-		{
-			Group:    "lb.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpxhas",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lb_vpx_ha",
-		},
-		{
-			Group:    "lb.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpxservices",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lb_vpx_service",
-		},
-		{
-			Group:    "lb.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vpxvips",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lb_vpx_vip",
-		},
-		{
-			Group:    "lbaas.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "lbaas",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbaasv1alpha1.GetEncoder(), lbaasv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lbaas",
-		},
-		{
-			Group:    "lbaas.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "healthmonitors",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbaasv1alpha1.GetEncoder(), lbaasv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lbaas_health_monitor",
-		},
-		{
-			Group:    "lbaas.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "serverinstanceattachments",
-		}: {
-			JsonIt:       controllers.GetJSONItr(lbaasv1alpha1.GetEncoder(), lbaasv1alpha1.GetDecoder()),
-			ResourceType: "ibm_lbaas_server_instance_attachment",
-		},
-		{
-			Group:    "multi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vlanfirewalls",
-		}: {
-			JsonIt:       controllers.GetJSONItr(multiv1alpha1.GetEncoder(), multiv1alpha1.GetDecoder()),
-			ResourceType: "ibm_multi_vlan_firewall",
-		},
-		{
-			Group:    "network.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "gateways",
-		}: {
-			JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
-			ResourceType: "ibm_network_gateway",
-		},
-		{
-			Group:    "network.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "gatewayvlanassociations",
-		}: {
-			JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
-			ResourceType: "ibm_network_gateway_vlan_association",
-		},
-		{
-			Group:    "network.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "interfacesgattachments",
-		}: {
-			JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
-			ResourceType: "ibm_network_interface_sg_attachment",
-		},
-		{
-			Group:    "network.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "publicips",
-		}: {
-			JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
-			ResourceType: "ibm_network_public_ip",
-		},
-		{
-			Group:    "network.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vlans",
-		}: {
-			JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
-			ResourceType: "ibm_network_vlan",
-		},
-		{
-			Group:    "network.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "vlanspannings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
-			ResourceType: "ibm_network_vlan_spanning",
-		},
-		{
-			Group:    "ob.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "loggings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(obv1alpha1.GetEncoder(), obv1alpha1.GetDecoder()),
-			ResourceType: "ibm_ob_logging",
-		},
-		{
-			Group:    "ob.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "monitorings",
-		}: {
-			JsonIt:       controllers.GetJSONItr(obv1alpha1.GetEncoder(), obv1alpha1.GetDecoder()),
-			ResourceType: "ibm_ob_monitoring",
-		},
-		{
-			Group:    "object.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "storageaccounts",
-		}: {
-			JsonIt:       controllers.GetJSONItr(objectv1alpha1.GetEncoder(), objectv1alpha1.GetDecoder()),
-			ResourceType: "ibm_object_storage_account",
-		},
-		{
-			Group:    "org.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "orgs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(orgv1alpha1.GetEncoder(), orgv1alpha1.GetDecoder()),
-			ResourceType: "ibm_org",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "captures",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_capture",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "images",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_image",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instances",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_instance",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "keys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_key",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "networks",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_network",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "networkports",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_network_port",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "networkportattaches",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_network_port_attach",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "operations",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_operations",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "snapshots",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_snapshot",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "volumes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_volume",
-		},
-		{
-			Group:    "pi.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "volumeattaches",
-		}: {
-			JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pi_volume_attach",
-		},
-		{
-			Group:    "pn.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "applicationchromes",
-		}: {
-			JsonIt:       controllers.GetJSONItr(pnv1alpha1.GetEncoder(), pnv1alpha1.GetDecoder()),
-			ResourceType: "ibm_pn_application_chrome",
-		},
-		{
-			Group:    "resource.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "groups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
-			ResourceType: "ibm_resource_group",
-		},
-		{
-			Group:    "resource.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instances",
-		}: {
-			JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
-			ResourceType: "ibm_resource_instance",
-		},
-		{
-			Group:    "resource.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "keys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
-			ResourceType: "ibm_resource_key",
-		},
-		{
-			Group:    "resource.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "tags",
-		}: {
-			JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
-			ResourceType: "ibm_resource_tag",
-		},
-		{
-			Group:    "satellite.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "clusters",
-		}: {
-			JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
-			ResourceType: "ibm_satellite_cluster",
-		},
-		{
-			Group:    "satellite.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "clusterworkerpools",
-		}: {
-			JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
-			ResourceType: "ibm_satellite_cluster_worker_pool",
-		},
-		{
-			Group:    "satellite.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "hosts",
-		}: {
-			JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
-			ResourceType: "ibm_satellite_host",
-		},
-		{
-			Group:    "satellite.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "locations",
-		}: {
-			JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
-			ResourceType: "ibm_satellite_location",
-		},
-		{
-			Group:    "schematics.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "actions",
-		}: {
-			JsonIt:       controllers.GetJSONItr(schematicsv1alpha1.GetEncoder(), schematicsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_schematics_action",
-		},
-		{
-			Group:    "schematics.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "jobs",
-		}: {
-			JsonIt:       controllers.GetJSONItr(schematicsv1alpha1.GetEncoder(), schematicsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_schematics_job",
-		},
-		{
-			Group:    "schematics.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "workspaces",
-		}: {
-			JsonIt:       controllers.GetJSONItr(schematicsv1alpha1.GetEncoder(), schematicsv1alpha1.GetDecoder()),
-			ResourceType: "ibm_schematics_workspace",
-		},
-		{
-			Group:    "security.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "groups",
-		}: {
-			JsonIt:       controllers.GetJSONItr(securityv1alpha1.GetEncoder(), securityv1alpha1.GetDecoder()),
-			ResourceType: "ibm_security_group",
-		},
-		{
-			Group:    "security.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "grouprules",
-		}: {
-			JsonIt:       controllers.GetJSONItr(securityv1alpha1.GetEncoder(), securityv1alpha1.GetDecoder()),
-			ResourceType: "ibm_security_group_rule",
-		},
-		{
-			Group:    "service.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "instances",
-		}: {
-			JsonIt:       controllers.GetJSONItr(servicev1alpha1.GetEncoder(), servicev1alpha1.GetDecoder()),
-			ResourceType: "ibm_service_instance",
-		},
-		{
-			Group:    "service.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "keys",
-		}: {
-			JsonIt:       controllers.GetJSONItr(servicev1alpha1.GetEncoder(), servicev1alpha1.GetDecoder()),
-			ResourceType: "ibm_service_key",
-		},
-		{
-			Group:    "space.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "spaces",
-		}: {
-			JsonIt:       controllers.GetJSONItr(spacev1alpha1.GetEncoder(), spacev1alpha1.GetDecoder()),
-			ResourceType: "ibm_space",
-		},
-		{
-			Group:    "ssl.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "certificates",
-		}: {
-			JsonIt:       controllers.GetJSONItr(sslv1alpha1.GetEncoder(), sslv1alpha1.GetDecoder()),
-			ResourceType: "ibm_ssl_certificate",
-		},
-		{
-			Group:    "storage.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "blocks",
-		}: {
-			JsonIt:       controllers.GetJSONItr(storagev1alpha1.GetEncoder(), storagev1alpha1.GetDecoder()),
-			ResourceType: "ibm_storage_block",
-		},
-		{
-			Group:    "storage.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "evaults",
-		}: {
-			JsonIt:       controllers.GetJSONItr(storagev1alpha1.GetEncoder(), storagev1alpha1.GetDecoder()),
-			ResourceType: "ibm_storage_evault",
-		},
-		{
-			Group:    "storage.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "files",
-		}: {
-			JsonIt:       controllers.GetJSONItr(storagev1alpha1.GetEncoder(), storagev1alpha1.GetDecoder()),
-			ResourceType: "ibm_storage_file",
-		},
-		{
-			Group:    "subnet.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "subnets",
-		}: {
-			JsonIt:       controllers.GetJSONItr(subnetv1alpha1.GetEncoder(), subnetv1alpha1.GetDecoder()),
-			ResourceType: "ibm_subnet",
-		},
-		{
-			Group:    "tg.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "connections",
-		}: {
-			JsonIt:       controllers.GetJSONItr(tgv1alpha1.GetEncoder(), tgv1alpha1.GetDecoder()),
-			ResourceType: "ibm_tg_connection",
-		},
-		{
-			Group:    "tg.ibm.kubeform.com",
-			Version:  "v1alpha1",
-			Resource: "gateways",
-		}: {
-			JsonIt:       controllers.GetJSONItr(tgv1alpha1.GetEncoder(), tgv1alpha1.GetDecoder()),
-			ResourceType: "ibm_tg_gateway",
-		},
-	}
-)
+var allJsonIt = map[schema.GroupVersionResource]Data{
+	{
+		Group:    "apigateway.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "endpoints",
+	}: {
+		JsonIt:       controllers.GetJSONItr(apigatewayv1alpha1.GetEncoder(), apigatewayv1alpha1.GetDecoder()),
+		ResourceType: "ibm_api_gateway_endpoint",
+	},
+	{
+		Group:    "apigateway.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "endpointsubscriptions",
+	}: {
+		JsonIt:       controllers.GetJSONItr(apigatewayv1alpha1.GetEncoder(), apigatewayv1alpha1.GetDecoder()),
+		ResourceType: "ibm_api_gateway_endpoint_subscription",
+	},
+	{
+		Group:    "app.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "apps",
+	}: {
+		JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
+		ResourceType: "ibm_app",
+	},
+	{
+		Group:    "app.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "configenvironments",
+	}: {
+		JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
+		ResourceType: "ibm_app_config_environment",
+	},
+	{
+		Group:    "app.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "configfeatures",
+	}: {
+		JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
+		ResourceType: "ibm_app_config_feature",
+	},
+	{
+		Group:    "app.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "domainprivates",
+	}: {
+		JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
+		ResourceType: "ibm_app_domain_private",
+	},
+	{
+		Group:    "app.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "domainshareds",
+	}: {
+		JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
+		ResourceType: "ibm_app_domain_shared",
+	},
+	{
+		Group:    "app.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "routes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(appv1alpha1.GetEncoder(), appv1alpha1.GetDecoder()),
+		ResourceType: "ibm_app_route",
+	},
+	{
+		Group:    "cdn.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "cdns",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cdnv1alpha1.GetEncoder(), cdnv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cdn",
+	},
+	{
+		Group:    "certificate.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "managerimports",
+	}: {
+		JsonIt:       controllers.GetJSONItr(certificatev1alpha1.GetEncoder(), certificatev1alpha1.GetDecoder()),
+		ResourceType: "ibm_certificate_manager_import",
+	},
+	{
+		Group:    "certificate.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "managerorders",
+	}: {
+		JsonIt:       controllers.GetJSONItr(certificatev1alpha1.GetEncoder(), certificatev1alpha1.GetDecoder()),
+		ResourceType: "ibm_certificate_manager_order",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "cis",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "cachesettings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_cache_settings",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "certificateorders",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_certificate_order",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "certificateuploads",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_certificate_upload",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "custompages",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_custom_page",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "dnsrecords",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_dns_record",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "dnsrecordsimports",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_dns_records_import",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "domains",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_domain",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "domainsettings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_domain_settings",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "edgefunctionsactions",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_edge_functions_action",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "edgefunctionstriggers",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_edge_functions_trigger",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "filters",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_filter",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "firewalls",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_firewall",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "globalloadbalancers",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_global_load_balancer",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "healthchecks",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_healthcheck",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "originpools",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_origin_pool",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "pagerules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_page_rule",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "rangeapps",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_range_app",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "ratelimits",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_rate_limit",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "routings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_routing",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "tlssettings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_tls_settings",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "wafgroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_waf_group",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "wafpackages",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_waf_package",
+	},
+	{
+		Group:    "cis.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "wafrules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cisv1alpha1.GetEncoder(), cisv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cis_waf_rule",
+	},
+	{
+		Group:    "cm.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "catalogs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cm_catalog",
+	},
+	{
+		Group:    "cm.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "offerings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cm_offering",
+	},
+	{
+		Group:    "cm.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "offeringinstances",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cm_offering_instance",
+	},
+	{
+		Group:    "cm.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "versions",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cmv1alpha1.GetEncoder(), cmv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cm_version",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "autoscalegroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_autoscale_group",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "autoscalepolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_autoscale_policy",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "baremetals",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_bare_metal",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "dedicatedhosts",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_dedicated_host",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "monitors",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_monitor",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "placementgroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_placement_group",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "provisioninghooks",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_provisioning_hook",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "sshkeys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_ssh_key",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "sslcertificates",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_ssl_certificate",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "users",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_user",
+	},
+	{
+		Group:    "compute.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vminstances",
+	}: {
+		JsonIt:       controllers.GetJSONItr(computev1alpha1.GetEncoder(), computev1alpha1.GetDecoder()),
+		ResourceType: "ibm_compute_vm_instance",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "addons",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_addons",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "albs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_alb",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "albcerts",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_alb_cert",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "apikeyresets",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_api_key_reset",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "bindservices",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_bind_service",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "clusters",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_cluster",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "clusterfeatures",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_cluster_feature",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcalbs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_vpc_alb",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcclusters",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_vpc_cluster",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcworkerpools",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_vpc_worker_pool",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "workerpools",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_worker_pool",
+	},
+	{
+		Group:    "container.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "workerpoolzoneattachments",
+	}: {
+		JsonIt:       controllers.GetJSONItr(containerv1alpha1.GetEncoder(), containerv1alpha1.GetDecoder()),
+		ResourceType: "ibm_container_worker_pool_zone_attachment",
+	},
+	{
+		Group:    "cos.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "buckets",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cosv1alpha1.GetEncoder(), cosv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cos_bucket",
+	},
+	{
+		Group:    "cos.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "bucketobjects",
+	}: {
+		JsonIt:       controllers.GetJSONItr(cosv1alpha1.GetEncoder(), cosv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cos_bucket_object",
+	},
+	{
+		Group:    "cr.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "namespaces",
+	}: {
+		JsonIt:       controllers.GetJSONItr(crv1alpha1.GetEncoder(), crv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cr_namespace",
+	},
+	{
+		Group:    "cr.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "retentionpolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(crv1alpha1.GetEncoder(), crv1alpha1.GetDecoder()),
+		ResourceType: "ibm_cr_retention_policy",
+	},
+	{
+		Group:    "database.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "databases",
+	}: {
+		JsonIt:       controllers.GetJSONItr(databasev1alpha1.GetEncoder(), databasev1alpha1.GetDecoder()),
+		ResourceType: "ibm_database",
+	},
+	{
+		Group:    "dl.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "gateways",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dlv1alpha1.GetEncoder(), dlv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dl_gateway",
+	},
+	{
+		Group:    "dl.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "providergateways",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dlv1alpha1.GetEncoder(), dlv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dl_provider_gateway",
+	},
+	{
+		Group:    "dl.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "virtualconnections",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dlv1alpha1.GetEncoder(), dlv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dl_virtual_connection",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "domains",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_domain",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "domainregistrationnameservers",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_domain_registration_nameservers",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "glbs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_glb",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "glbmonitors",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_glb_monitor",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "glbpools",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_glb_pool",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "permittednetworks",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_permitted_network",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "records",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_record",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "resourcerecords",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_resource_record",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "reverserecords",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_reverse_record",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "secondaries",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_secondary",
+	},
+	{
+		Group:    "dns.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "zones",
+	}: {
+		JsonIt:       controllers.GetJSONItr(dnsv1alpha1.GetEncoder(), dnsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_dns_zone",
+	},
+	{
+		Group:    "enterprise.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "enterprises",
+	}: {
+		JsonIt:       controllers.GetJSONItr(enterprisev1alpha1.GetEncoder(), enterprisev1alpha1.GetDecoder()),
+		ResourceType: "ibm_enterprise",
+	},
+	{
+		Group:    "enterprise.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "accounts",
+	}: {
+		JsonIt:       controllers.GetJSONItr(enterprisev1alpha1.GetEncoder(), enterprisev1alpha1.GetDecoder()),
+		ResourceType: "ibm_enterprise_account",
+	},
+	{
+		Group:    "enterprise.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "accountgroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(enterprisev1alpha1.GetEncoder(), enterprisev1alpha1.GetDecoder()),
+		ResourceType: "ibm_enterprise_account_group",
+	},
+	{
+		Group:    "event.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "streamstopics",
+	}: {
+		JsonIt:       controllers.GetJSONItr(eventv1alpha1.GetEncoder(), eventv1alpha1.GetDecoder()),
+		ResourceType: "ibm_event_streams_topic",
+	},
+	{
+		Group:    "firewall.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "firewalls",
+	}: {
+		JsonIt:       controllers.GetJSONItr(firewallv1alpha1.GetEncoder(), firewallv1alpha1.GetDecoder()),
+		ResourceType: "ibm_firewall",
+	},
+	{
+		Group:    "firewall.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "policies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(firewallv1alpha1.GetEncoder(), firewallv1alpha1.GetDecoder()),
+		ResourceType: "ibm_firewall_policy",
+	},
+	{
+		Group:    "function.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "actions",
+	}: {
+		JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
+		ResourceType: "ibm_function_action",
+	},
+	{
+		Group:    "function.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "namespaces",
+	}: {
+		JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
+		ResourceType: "ibm_function_namespace",
+	},
+	{
+		Group:    "function.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "packages",
+	}: {
+		JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
+		ResourceType: "ibm_function_package",
+	},
+	{
+		Group:    "function.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "rules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
+		ResourceType: "ibm_function_rule",
+	},
+	{
+		Group:    "function.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "triggers",
+	}: {
+		JsonIt:       controllers.GetJSONItr(functionv1alpha1.GetEncoder(), functionv1alpha1.GetDecoder()),
+		ResourceType: "ibm_function_trigger",
+	},
+	{
+		Group:    "hardware.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "firewallshareds",
+	}: {
+		JsonIt:       controllers.GetJSONItr(hardwarev1alpha1.GetEncoder(), hardwarev1alpha1.GetDecoder()),
+		ResourceType: "ibm_hardware_firewall_shared",
+	},
+	{
+		Group:    "hpcs.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "hpcs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(hpcsv1alpha1.GetEncoder(), hpcsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_hpcs",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "accessgroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_access_group",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "accessgroupdynamicrules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_access_group_dynamic_rule",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "accessgroupmembers",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_access_group_members",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "accessgrouppolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_access_group_policy",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "accountsettings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_account_settings",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "apikeys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_api_key",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "authorizationpolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_authorization_policy",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "authorizationpolicydetaches",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_authorization_policy_detach",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "customroles",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_custom_role",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "serviceapikeys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_service_api_key",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "serviceids",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_service_id",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "servicepolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_service_policy",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "userinvites",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_user_invite",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "userpolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_user_policy",
+	},
+	{
+		Group:    "iam.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "usersettings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(iamv1alpha1.GetEncoder(), iamv1alpha1.GetDecoder()),
+		ResourceType: "ibm_iam_user_settings",
+	},
+	{
+		Group:    "ipsec.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpns",
+	}: {
+		JsonIt:       controllers.GetJSONItr(ipsecv1alpha1.GetEncoder(), ipsecv1alpha1.GetDecoder()),
+		ResourceType: "ibm_ipsec_vpn",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "dedicatedhosts",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_dedicated_host",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "dedicatedhostdiskmanagements",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_dedicated_host_disk_management",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "dedicatedhostgroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_dedicated_host_group",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "floatingips",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_floating_ip",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "flowlogs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_flow_log",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "ikepolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_ike_policy",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "images",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_image",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instances",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancediskmanagements",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_disk_management",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancegroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_group",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancegroupmanagers",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_group_manager",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancegroupmanageractions",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_group_manager_action",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancegroupmanagerpolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_group_manager_policy",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancegroupmemberships",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_group_membership",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancetemplates",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_template",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instancevolumeattachments",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_instance_volume_attachment",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "ipsecpolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_ipsec_policy",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lbs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_lb",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lblisteners",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_lb_listener",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lblistenerpolicies",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_lb_listener_policy",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lblistenerpolicyrules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_lb_listener_policy_rule",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lbpools",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_lb_pool",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lbpoolmembers",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_lb_pool_member",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "networkacls",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_network_acl",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "networkaclrules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_network_acl_rule",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "publicgateways",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_public_gateway",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "securitygroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_security_group",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "securitygroupnetworkinterfaceattachments",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_security_group_network_interface_attachment",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "securitygrouprules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_security_group_rule",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "securitygrouptargets",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_security_group_target",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "snapshots",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_snapshot",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "sshkeys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_ssh_key",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "subnets",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_subnet",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "subnetnetworkaclattachments",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_subnet_network_acl_attachment",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "subnetreservedips",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_subnet_reserved_ip",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "virtualendpointgateways",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_virtual_endpoint_gateway",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "virtualendpointgatewayips",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_virtual_endpoint_gateway_ip",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "volumes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_volume",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_vpc",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcaddressprefixes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_vpc_address_prefix",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcroutes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_vpc_route",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcroutingtables",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_vpc_routing_table",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpcroutingtableroutes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_vpc_routing_table_route",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpngateways",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_vpn_gateway",
+	},
+	{
+		Group:    "is.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpngatewayconnections",
+	}: {
+		JsonIt:       controllers.GetJSONItr(isv1alpha1.GetEncoder(), isv1alpha1.GetDecoder()),
+		ResourceType: "ibm_is_vpn_gateway_connection",
+	},
+	{
+		Group:    "kms.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "keys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(kmsv1alpha1.GetEncoder(), kmsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_kms_key",
+	},
+	{
+		Group:    "kms.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "keyalias",
+	}: {
+		JsonIt:       controllers.GetJSONItr(kmsv1alpha1.GetEncoder(), kmsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_kms_key_alias",
+	},
+	{
+		Group:    "kms.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "keyrings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(kmsv1alpha1.GetEncoder(), kmsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_kms_key_rings",
+	},
+	{
+		Group:    "kp.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "keys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(kpv1alpha1.GetEncoder(), kpv1alpha1.GetDecoder()),
+		ResourceType: "ibm_kp_key",
+	},
+	{
+		Group:    "lb.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lbs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lb",
+	},
+	{
+		Group:    "lb.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "services",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lb_service",
+	},
+	{
+		Group:    "lb.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "servicegroups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lb_service_group",
+	},
+	{
+		Group:    "lb.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpxes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lb_vpx",
+	},
+	{
+		Group:    "lb.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpxhas",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lb_vpx_ha",
+	},
+	{
+		Group:    "lb.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpxservices",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lb_vpx_service",
+	},
+	{
+		Group:    "lb.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vpxvips",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbv1alpha1.GetEncoder(), lbv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lb_vpx_vip",
+	},
+	{
+		Group:    "lbaas.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "lbaas",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbaasv1alpha1.GetEncoder(), lbaasv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lbaas",
+	},
+	{
+		Group:    "lbaas.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "healthmonitors",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbaasv1alpha1.GetEncoder(), lbaasv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lbaas_health_monitor",
+	},
+	{
+		Group:    "lbaas.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "serverinstanceattachments",
+	}: {
+		JsonIt:       controllers.GetJSONItr(lbaasv1alpha1.GetEncoder(), lbaasv1alpha1.GetDecoder()),
+		ResourceType: "ibm_lbaas_server_instance_attachment",
+	},
+	{
+		Group:    "multi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vlanfirewalls",
+	}: {
+		JsonIt:       controllers.GetJSONItr(multiv1alpha1.GetEncoder(), multiv1alpha1.GetDecoder()),
+		ResourceType: "ibm_multi_vlan_firewall",
+	},
+	{
+		Group:    "network.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "gateways",
+	}: {
+		JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
+		ResourceType: "ibm_network_gateway",
+	},
+	{
+		Group:    "network.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "gatewayvlanassociations",
+	}: {
+		JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
+		ResourceType: "ibm_network_gateway_vlan_association",
+	},
+	{
+		Group:    "network.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "interfacesgattachments",
+	}: {
+		JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
+		ResourceType: "ibm_network_interface_sg_attachment",
+	},
+	{
+		Group:    "network.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "publicips",
+	}: {
+		JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
+		ResourceType: "ibm_network_public_ip",
+	},
+	{
+		Group:    "network.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vlans",
+	}: {
+		JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
+		ResourceType: "ibm_network_vlan",
+	},
+	{
+		Group:    "network.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "vlanspannings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(networkv1alpha1.GetEncoder(), networkv1alpha1.GetDecoder()),
+		ResourceType: "ibm_network_vlan_spanning",
+	},
+	{
+		Group:    "ob.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "loggings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(obv1alpha1.GetEncoder(), obv1alpha1.GetDecoder()),
+		ResourceType: "ibm_ob_logging",
+	},
+	{
+		Group:    "ob.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "monitorings",
+	}: {
+		JsonIt:       controllers.GetJSONItr(obv1alpha1.GetEncoder(), obv1alpha1.GetDecoder()),
+		ResourceType: "ibm_ob_monitoring",
+	},
+	{
+		Group:    "object.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "storageaccounts",
+	}: {
+		JsonIt:       controllers.GetJSONItr(objectv1alpha1.GetEncoder(), objectv1alpha1.GetDecoder()),
+		ResourceType: "ibm_object_storage_account",
+	},
+	{
+		Group:    "org.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "orgs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(orgv1alpha1.GetEncoder(), orgv1alpha1.GetDecoder()),
+		ResourceType: "ibm_org",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "captures",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_capture",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "images",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_image",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instances",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_instance",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "keys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_key",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "networks",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_network",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "networkports",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_network_port",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "networkportattaches",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_network_port_attach",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "operations",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_operations",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "snapshots",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_snapshot",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "volumes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_volume",
+	},
+	{
+		Group:    "pi.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "volumeattaches",
+	}: {
+		JsonIt:       controllers.GetJSONItr(piv1alpha1.GetEncoder(), piv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pi_volume_attach",
+	},
+	{
+		Group:    "pn.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "applicationchromes",
+	}: {
+		JsonIt:       controllers.GetJSONItr(pnv1alpha1.GetEncoder(), pnv1alpha1.GetDecoder()),
+		ResourceType: "ibm_pn_application_chrome",
+	},
+	{
+		Group:    "resource.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "groups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
+		ResourceType: "ibm_resource_group",
+	},
+	{
+		Group:    "resource.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instances",
+	}: {
+		JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
+		ResourceType: "ibm_resource_instance",
+	},
+	{
+		Group:    "resource.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "keys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
+		ResourceType: "ibm_resource_key",
+	},
+	{
+		Group:    "resource.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "tags",
+	}: {
+		JsonIt:       controllers.GetJSONItr(resourcev1alpha1.GetEncoder(), resourcev1alpha1.GetDecoder()),
+		ResourceType: "ibm_resource_tag",
+	},
+	{
+		Group:    "satellite.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "clusters",
+	}: {
+		JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
+		ResourceType: "ibm_satellite_cluster",
+	},
+	{
+		Group:    "satellite.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "clusterworkerpools",
+	}: {
+		JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
+		ResourceType: "ibm_satellite_cluster_worker_pool",
+	},
+	{
+		Group:    "satellite.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "hosts",
+	}: {
+		JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
+		ResourceType: "ibm_satellite_host",
+	},
+	{
+		Group:    "satellite.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "locations",
+	}: {
+		JsonIt:       controllers.GetJSONItr(satellitev1alpha1.GetEncoder(), satellitev1alpha1.GetDecoder()),
+		ResourceType: "ibm_satellite_location",
+	},
+	{
+		Group:    "schematics.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "actions",
+	}: {
+		JsonIt:       controllers.GetJSONItr(schematicsv1alpha1.GetEncoder(), schematicsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_schematics_action",
+	},
+	{
+		Group:    "schematics.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "jobs",
+	}: {
+		JsonIt:       controllers.GetJSONItr(schematicsv1alpha1.GetEncoder(), schematicsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_schematics_job",
+	},
+	{
+		Group:    "schematics.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "workspaces",
+	}: {
+		JsonIt:       controllers.GetJSONItr(schematicsv1alpha1.GetEncoder(), schematicsv1alpha1.GetDecoder()),
+		ResourceType: "ibm_schematics_workspace",
+	},
+	{
+		Group:    "security.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "groups",
+	}: {
+		JsonIt:       controllers.GetJSONItr(securityv1alpha1.GetEncoder(), securityv1alpha1.GetDecoder()),
+		ResourceType: "ibm_security_group",
+	},
+	{
+		Group:    "security.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "grouprules",
+	}: {
+		JsonIt:       controllers.GetJSONItr(securityv1alpha1.GetEncoder(), securityv1alpha1.GetDecoder()),
+		ResourceType: "ibm_security_group_rule",
+	},
+	{
+		Group:    "service.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "instances",
+	}: {
+		JsonIt:       controllers.GetJSONItr(servicev1alpha1.GetEncoder(), servicev1alpha1.GetDecoder()),
+		ResourceType: "ibm_service_instance",
+	},
+	{
+		Group:    "service.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "keys",
+	}: {
+		JsonIt:       controllers.GetJSONItr(servicev1alpha1.GetEncoder(), servicev1alpha1.GetDecoder()),
+		ResourceType: "ibm_service_key",
+	},
+	{
+		Group:    "space.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "spaces",
+	}: {
+		JsonIt:       controllers.GetJSONItr(spacev1alpha1.GetEncoder(), spacev1alpha1.GetDecoder()),
+		ResourceType: "ibm_space",
+	},
+	{
+		Group:    "ssl.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "certificates",
+	}: {
+		JsonIt:       controllers.GetJSONItr(sslv1alpha1.GetEncoder(), sslv1alpha1.GetDecoder()),
+		ResourceType: "ibm_ssl_certificate",
+	},
+	{
+		Group:    "storage.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "blocks",
+	}: {
+		JsonIt:       controllers.GetJSONItr(storagev1alpha1.GetEncoder(), storagev1alpha1.GetDecoder()),
+		ResourceType: "ibm_storage_block",
+	},
+	{
+		Group:    "storage.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "evaults",
+	}: {
+		JsonIt:       controllers.GetJSONItr(storagev1alpha1.GetEncoder(), storagev1alpha1.GetDecoder()),
+		ResourceType: "ibm_storage_evault",
+	},
+	{
+		Group:    "storage.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "files",
+	}: {
+		JsonIt:       controllers.GetJSONItr(storagev1alpha1.GetEncoder(), storagev1alpha1.GetDecoder()),
+		ResourceType: "ibm_storage_file",
+	},
+	{
+		Group:    "subnet.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "subnets",
+	}: {
+		JsonIt:       controllers.GetJSONItr(subnetv1alpha1.GetEncoder(), subnetv1alpha1.GetDecoder()),
+		ResourceType: "ibm_subnet",
+	},
+	{
+		Group:    "tg.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "connections",
+	}: {
+		JsonIt:       controllers.GetJSONItr(tgv1alpha1.GetEncoder(), tgv1alpha1.GetDecoder()),
+		ResourceType: "ibm_tg_connection",
+	},
+	{
+		Group:    "tg.ibm.kubeform.com",
+		Version:  "v1alpha1",
+		Resource: "gateways",
+	}: {
+		JsonIt:       controllers.GetJSONItr(tgv1alpha1.GetEncoder(), tgv1alpha1.GetDecoder()),
+		ResourceType: "ibm_tg_gateway",
+	},
+}
 
 func getJsonItAndResType(gvr schema.GroupVersionResource) Data {
 	return allJsonIt[gvr]
