@@ -86,7 +86,7 @@ func (r *OriginPool) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range originpoolForceNewList {
+	for key, _ := range originpoolForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

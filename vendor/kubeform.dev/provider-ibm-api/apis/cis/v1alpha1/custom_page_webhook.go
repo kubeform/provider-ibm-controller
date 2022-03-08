@@ -88,7 +88,7 @@ func (r *CustomPage) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range custompageForceNewList {
+	for key, _ := range custompageForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

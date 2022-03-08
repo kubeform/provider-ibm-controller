@@ -90,7 +90,7 @@ func (r *VpnGatewayConnection) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range vpngatewayconnectionForceNewList {
+	for key, _ := range vpngatewayconnectionForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

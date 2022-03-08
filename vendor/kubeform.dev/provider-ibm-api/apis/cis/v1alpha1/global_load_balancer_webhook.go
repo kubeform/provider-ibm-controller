@@ -86,7 +86,7 @@ func (r *GlobalLoadBalancer) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range globalloadbalancerForceNewList {
+	for key, _ := range globalloadbalancerForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

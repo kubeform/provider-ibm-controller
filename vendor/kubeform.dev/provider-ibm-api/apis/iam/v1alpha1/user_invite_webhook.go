@@ -86,7 +86,7 @@ func (r *UserInvite) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range userinviteForceNewList {
+	for key, _ := range userinviteForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

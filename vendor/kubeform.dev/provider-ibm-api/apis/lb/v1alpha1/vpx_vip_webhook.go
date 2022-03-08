@@ -92,7 +92,7 @@ func (r *VpxVip) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range vpxvipForceNewList {
+	for key, _ := range vpxvipForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

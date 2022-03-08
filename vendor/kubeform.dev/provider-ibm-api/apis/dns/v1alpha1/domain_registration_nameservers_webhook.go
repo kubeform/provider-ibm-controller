@@ -86,7 +86,7 @@ func (r *DomainRegistrationNameservers) ValidateUpdate(old runtime.Object) error
 		return err
 	}
 
-	for key := range domainregistrationnameserversForceNewList {
+	for key, _ := range domainregistrationnameserversForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

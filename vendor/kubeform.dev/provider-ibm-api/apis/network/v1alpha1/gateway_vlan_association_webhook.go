@@ -89,7 +89,7 @@ func (r *GatewayVLANAssociation) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range gatewayvlanassociationForceNewList {
+	for key, _ := range gatewayvlanassociationForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

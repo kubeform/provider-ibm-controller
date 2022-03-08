@@ -88,7 +88,7 @@ func (r *DedicatedHostDiskManagement) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range dedicatedhostdiskmanagementForceNewList {
+	for key, _ := range dedicatedhostdiskmanagementForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

@@ -86,7 +86,7 @@ func (r *ConfigFeature) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range configfeatureForceNewList {
+	for key, _ := range configfeatureForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

@@ -88,7 +88,7 @@ func (r *LbListener) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range lblistenerForceNewList {
+	for key, _ := range lblistenerForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

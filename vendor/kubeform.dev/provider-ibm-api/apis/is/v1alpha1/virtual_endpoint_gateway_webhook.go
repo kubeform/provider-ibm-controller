@@ -92,7 +92,7 @@ func (r *VirtualEndpointGateway) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range virtualendpointgatewayForceNewList {
+	for key, _ := range virtualendpointgatewayForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

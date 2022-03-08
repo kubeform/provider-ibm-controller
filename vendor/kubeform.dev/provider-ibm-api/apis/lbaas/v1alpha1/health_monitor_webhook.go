@@ -89,7 +89,7 @@ func (r *HealthMonitor) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range healthmonitorForceNewList {
+	for key, _ := range healthmonitorForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

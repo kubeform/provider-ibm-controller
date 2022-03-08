@@ -92,7 +92,7 @@ func (r *Block) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range blockForceNewList {
+	for key, _ := range blockForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

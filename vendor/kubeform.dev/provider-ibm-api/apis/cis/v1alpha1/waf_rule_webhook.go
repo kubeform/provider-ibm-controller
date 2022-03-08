@@ -89,7 +89,7 @@ func (r *WafRule) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range wafruleForceNewList {
+	for key, _ := range wafruleForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

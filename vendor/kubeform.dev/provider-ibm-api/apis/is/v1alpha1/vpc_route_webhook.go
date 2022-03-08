@@ -91,7 +91,7 @@ func (r *VpcRoute) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range vpcrouteForceNewList {
+	for key, _ := range vpcrouteForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

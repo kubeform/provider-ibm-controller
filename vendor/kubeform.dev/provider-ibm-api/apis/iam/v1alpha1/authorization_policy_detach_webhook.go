@@ -88,7 +88,7 @@ func (r *AuthorizationPolicyDetach) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range authorizationpolicydetachForceNewList {
+	for key, _ := range authorizationpolicydetachForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

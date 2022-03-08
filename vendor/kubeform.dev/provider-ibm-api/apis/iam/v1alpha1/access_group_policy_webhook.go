@@ -88,7 +88,7 @@ func (r *AccessGroupPolicy) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range accessgrouppolicyForceNewList {
+	for key, _ := range accessgrouppolicyForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

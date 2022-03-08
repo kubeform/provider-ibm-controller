@@ -92,7 +92,7 @@ func (r *VpcWorkerPool) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range vpcworkerpoolForceNewList {
+	for key, _ := range vpcworkerpoolForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

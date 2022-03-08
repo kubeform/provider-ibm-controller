@@ -86,7 +86,7 @@ func (r *ProvisioningHook) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range provisioninghookForceNewList {
+	for key, _ := range provisioninghookForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

@@ -88,7 +88,7 @@ func (r *ReverseRecord) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range reverserecordForceNewList {
+	for key, _ := range reverserecordForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

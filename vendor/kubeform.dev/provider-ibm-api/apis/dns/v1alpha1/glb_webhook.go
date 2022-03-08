@@ -89,7 +89,7 @@ func (r *Glb) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range glbForceNewList {
+	for key, _ := range glbForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

@@ -88,7 +88,7 @@ func (r *Secondary) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range secondaryForceNewList {
+	for key, _ := range secondaryForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

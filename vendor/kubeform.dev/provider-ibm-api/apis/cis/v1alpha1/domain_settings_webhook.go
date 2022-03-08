@@ -86,7 +86,7 @@ func (r *DomainSettings) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range domainsettingsForceNewList {
+	for key, _ := range domainsettingsForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

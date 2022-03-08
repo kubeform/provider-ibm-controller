@@ -88,7 +88,7 @@ func (r *EdgeFunctionsAction) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range edgefunctionsactionForceNewList {
+	for key, _ := range edgefunctionsactionForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

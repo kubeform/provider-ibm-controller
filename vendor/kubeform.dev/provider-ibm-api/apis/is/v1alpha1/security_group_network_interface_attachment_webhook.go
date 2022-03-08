@@ -89,7 +89,7 @@ func (r *SecurityGroupNetworkInterfaceAttachment) ValidateUpdate(old runtime.Obj
 		return err
 	}
 
-	for key := range securitygroupnetworkinterfaceattachmentForceNewList {
+	for key, _ := range securitygroupnetworkinterfaceattachmentForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false
