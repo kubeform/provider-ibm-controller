@@ -89,7 +89,7 @@ func (r *ManagerOrder) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range managerorderForceNewList {
+	for key, _ := range managerorderForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

@@ -90,7 +90,7 @@ func (r *FirewallShared) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range firewallsharedForceNewList {
+	for key, _ := range firewallsharedForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

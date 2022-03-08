@@ -122,7 +122,7 @@ func (r *BareMetal) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range baremetalForceNewList {
+	for key, _ := range baremetalForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

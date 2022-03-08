@@ -86,7 +86,7 @@ func (r *RateLimit) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range ratelimitForceNewList {
+	for key, _ := range ratelimitForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

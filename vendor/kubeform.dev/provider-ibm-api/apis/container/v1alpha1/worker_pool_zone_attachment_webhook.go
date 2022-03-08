@@ -91,7 +91,7 @@ func (r *WorkerPoolZoneAttachment) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range workerpoolzoneattachmentForceNewList {
+	for key, _ := range workerpoolzoneattachmentForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

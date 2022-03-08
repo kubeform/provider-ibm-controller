@@ -91,7 +91,7 @@ func (r *KeyAlias) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range keyaliasForceNewList {
+	for key, _ := range keyaliasForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

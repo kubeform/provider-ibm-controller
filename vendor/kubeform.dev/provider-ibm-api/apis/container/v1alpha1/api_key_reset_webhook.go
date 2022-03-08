@@ -89,7 +89,7 @@ func (r *ApiKeyReset) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range apikeyresetForceNewList {
+	for key, _ := range apikeyresetForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

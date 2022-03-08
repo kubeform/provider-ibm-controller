@@ -86,7 +86,7 @@ func (r *PageRule) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range pageruleForceNewList {
+	for key, _ := range pageruleForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

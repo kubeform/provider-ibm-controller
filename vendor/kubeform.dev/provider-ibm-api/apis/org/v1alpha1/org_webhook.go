@@ -86,7 +86,7 @@ func (r *Org) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range orgForceNewList {
+	for key, _ := range orgForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

@@ -102,7 +102,7 @@ func (r *InstanceTemplate) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range instancetemplateForceNewList {
+	for key, _ := range instancetemplateForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

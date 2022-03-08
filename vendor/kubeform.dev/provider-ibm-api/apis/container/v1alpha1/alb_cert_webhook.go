@@ -90,7 +90,7 @@ func (r *AlbCert) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range albcertForceNewList {
+	for key, _ := range albcertForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

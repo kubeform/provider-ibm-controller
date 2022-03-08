@@ -94,7 +94,7 @@ func (r *BindService) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range bindserviceForceNewList {
+	for key, _ := range bindserviceForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

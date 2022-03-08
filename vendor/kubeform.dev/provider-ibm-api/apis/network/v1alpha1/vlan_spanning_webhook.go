@@ -86,7 +86,7 @@ func (r *VlanSpanning) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range vlanspanningForceNewList {
+	for key, _ := range vlanspanningForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

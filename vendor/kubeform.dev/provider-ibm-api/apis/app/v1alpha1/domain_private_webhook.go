@@ -89,7 +89,7 @@ func (r *DomainPrivate) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range domainprivateForceNewList {
+	for key, _ := range domainprivateForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

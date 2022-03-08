@@ -88,7 +88,7 @@ func (r *Addons) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range addonsForceNewList {
+	for key, _ := range addonsForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

@@ -88,7 +88,7 @@ func (r *ServiceGroup) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range servicegroupForceNewList {
+	for key, _ := range servicegroupForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

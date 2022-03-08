@@ -90,7 +90,7 @@ func (r *Lbaas) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range lbaasForceNewList {
+	for key, _ := range lbaasForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

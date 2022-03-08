@@ -88,7 +88,7 @@ func (r *Monitoring) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range monitoringForceNewList {
+	for key, _ := range monitoringForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

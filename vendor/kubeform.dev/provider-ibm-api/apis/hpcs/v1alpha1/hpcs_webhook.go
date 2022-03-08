@@ -86,7 +86,7 @@ func (r *Hpcs) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range hpcsForceNewList {
+	for key, _ := range hpcsForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

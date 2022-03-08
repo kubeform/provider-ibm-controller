@@ -90,7 +90,7 @@ func (r *ResourceRecord) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range resourcerecordForceNewList {
+	for key, _ := range resourcerecordForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

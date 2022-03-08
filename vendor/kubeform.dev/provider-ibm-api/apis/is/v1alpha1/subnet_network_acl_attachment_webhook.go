@@ -88,7 +88,7 @@ func (r *SubnetNetworkACLAttachment) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range subnetnetworkaclattachmentForceNewList {
+	for key, _ := range subnetnetworkaclattachmentForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false

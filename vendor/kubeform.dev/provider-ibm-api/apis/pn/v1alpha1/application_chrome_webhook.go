@@ -88,7 +88,7 @@ func (r *ApplicationChrome) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key := range applicationchromeForceNewList {
+	for key, _ := range applicationchromeForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false
